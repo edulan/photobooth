@@ -6,6 +6,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'database_cleaner'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -20,7 +21,7 @@ require 'capybara/rspec'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -49,4 +50,32 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  # Configuration for Database Cleaner, RSpec and Capybara taken from
+  # https://coderwall.com/p/ahtb7w/database-cleaner-rspec-and-capybara-configuration
+
+  # Clean up and initialize database before
+  # running test exmaples
+  config.before(:suite) do
+    # Truncate database to clean up garbage from
+    # interrupted or badly written examples
+    DatabaseCleaner.clean_with(:truncation)
+    # Seed dataase. Use it only for essential
+    # to run application data.
+    load "#{Rails.root}/db/seeds.rb"
+  end
+
+  config.around(:each) do |example|
+    # Use really fast transaction strategy for all
+    # examples except `js: true` capybara specs
+    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
+    # Start transaction
+    DatabaseCleaner.start
+    # Run example
+    example.run
+    # Rollback transaction
+    DatabaseCleaner.clean
+    # Clear session data
+    Capybara.reset_sessions!
+  end
 end
