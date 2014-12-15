@@ -1,23 +1,16 @@
-<h1>Listing clips</h1>
+<div class="row">
+  <%= link_to 'New Clip', new_clip_path %>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="row">
+  <h1>Clips collection</h1>
 
-  <tbody>
-    <% @clips.each do |clip| %>
-      <tr>
-        <td><%= link_to 'Show', clip %></td>
-        <td><%= link_to 'Edit', edit_clip_path(clip) %></td>
-        <td><%= link_to 'Destroy', clip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <% @clips.each do |clip| %>
+    <div class="col-md-4">
+      <div class="clip">
+        <img class="img-responsive" src="http://robohash.org/foo" alt="">
+      </div>
+    </div>
+  <% end %>
+</div>
 
-<br>
-
-<%= link_to 'New Clip', new_clip_path %>
