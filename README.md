@@ -1,4 +1,4 @@
-photobooth
+PhotoBooth
 ==========
 
-Smile in 3, 2, 1...
+Simple photo booth application for taking snapshots from your laptop camera.
