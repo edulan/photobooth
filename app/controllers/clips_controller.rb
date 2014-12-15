@@ -69,6 +69,6 @@ class ClipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def clip_params
-      params[:clip]
+      params.require(:clip).permit(:frame)
     end
 end
