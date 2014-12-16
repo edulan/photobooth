@@ -1,5 +1,5 @@
 <div class="row">
-  <h1>Clips collection</h1>
+  <h1>PhotoBooth Hall</h1>
 </div>
 
 <div class="row">
@@ -7,10 +7,9 @@
 </div>
 
 <div class="row">
-
   <% @clips.each do |clip| %>
     <div class="col-md-4">
-      <div class="clip">
+      <div class="clip-group">
         <div class="row">
           <div class="col-md-6 col-sm-6 col-xs-6">
             <%= image_tag clip.frame.url(:thumb), class: "img-responsive center-block" %>
@@ -32,4 +31,3 @@
     </div>
   <% end %>
 </div>
-

@@ -9,6 +9,6 @@ feature "Listing clips", :type => :feature do
   scenario "shows all created clips" do
     visit clips_path
 
-    expect(page).to have_css(".clip", count: 3)
+    expect(page).to have_css(".clip-group", count: 3)
   end
 end
