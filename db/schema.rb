@@ -11,15 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141215201116) do
+ActiveRecord::Schema.define(version: 20141216180300) do
 
   create_table "clips", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "frame_file_name"
-    t.string   "frame_content_type"
-    t.integer  "frame_file_size"
-    t.datetime "frame_updated_at"
+    t.string   "snapshot1_file_name"
+    t.string   "snapshot1_content_type"
+    t.integer  "snapshot1_file_size"
+    t.datetime "snapshot1_updated_at"
+    t.string   "snapshot2_file_name"
+    t.string   "snapshot2_content_type"
+    t.integer  "snapshot2_file_size"
+    t.datetime "snapshot2_updated_at"
+    t.string   "snapshot3_file_name"
+    t.string   "snapshot3_content_type"
+    t.integer  "snapshot3_file_size"
+    t.datetime "snapshot3_updated_at"
+    t.string   "snapshot4_file_name"
+    t.string   "snapshot4_content_type"
+    t.integer  "snapshot4_file_size"
+    t.datetime "snapshot4_updated_at"
   end
 
 end
