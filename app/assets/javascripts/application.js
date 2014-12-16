@@ -1,3 +1,9 @@
+//= require polyfills/canvas-to-blob
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
+//= require bootstrap-sprockets
+//= require underscore
+//= require backbone
+//= require marionette
 //= require_tree .
