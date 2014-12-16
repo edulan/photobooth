@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Listing clips", :type => :feature do
+feature "Listing clips", type: :feature, js: true do
 
   background do
     create_list(:clip, 3)

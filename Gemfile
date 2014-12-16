@@ -32,6 +32,8 @@ gem 'rspec-rails', '~> 3.0', group: [:development, :test]
 
 group :test do
   gem 'capybara'
+  gem 'capybara-screenshot'
+  gem 'poltergeist'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
 end
