@@ -18,3 +18,39 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "bootswatch/darkly/bootswatch";
+
+.clip-group {
+    float: left;
+    margin: 0.5em;
+    background: #fff;
+    padding: 5px;
+    width: 234px;
+
+    .row {
+        margin-left: auto;
+        margin-right: auto;
+        width: 224px;
+    }
+}
+
+.clip-image-wrapper {
+    margin: 6px;
+    float: left;
+}
+
+.clip-image {
+    width: 100px;
+    height: 63px;
+}
+
+.clip-thumbnail {
+    padding: 16x 0;
+}
+
+.clip-thumbnail-left {
+    padding-right: 2.5px;
+}
+
+.clip-thumbnail-right {
+    padding-left: 2.5px;
+}

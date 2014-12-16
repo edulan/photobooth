@@ -6,28 +6,4 @@
   <%= link_to 'New Clip', new_clip_path, class: "btn btn-primary pull-right" %>
 </div>
 
-<div class="row">
-  <% @clips.each do |clip| %>
-    <div class="col-md-4">
-      <div class="clip-group">
-        <div class="row">
-          <div class="col-md-6 col-sm-6 col-xs-6">
-            <%= image_tag clip.frame.url(:thumb), class: "img-responsive center-block" %>
-          </div>
-          <div class="col-md-6 col-sm-6 col-xs-6">
-            <%= image_tag clip.frame.url(:thumb), class: "img-responsive center-block" %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-sm-6 col-xs-6">
-            <%= image_tag clip.frame.url(:thumb), class: "img-responsive center-block" %>
-          </div>
-          <div class="col-md-6 col-sm-6 col-xs-6">
-            <%= image_tag clip.frame.url(:thumb), class: "img-responsive center-block" %>
-          </div>
-        </div>
-        <!-- <img class="img-responsive" src="http://robohash.org/foo" alt=""> -->
-      </div>
-    </div>
-  <% end %>
-</div>
+<div class="row row-clip"></div>
