@@ -5,5 +5,7 @@
 //= require bootstrap-sprockets
 //= require underscore
 //= require backbone
-//= require marionette
+//= require backbone.babysitter
+//= require backbone.wreqr
+//= require backbone.marionette
 //= require_tree .

@@ -24,9 +24,9 @@ gem 'spring',        group: :development
 
 gem "paperclip", "~> 4.2"
 
-gem 'rails-assets-backbone'
-gem 'rails-assets-underscore'
-gem 'rails-assets-marionette'
+gem 'rails-assets-underscore', '1.6.0'
+gem 'rails-assets-backbone', '1.1.2'
+gem 'rails-assets-backbone.marionette', '2.2.1'
 
 gem 'rspec-rails', '~> 3.0', group: [:development, :test]
 
