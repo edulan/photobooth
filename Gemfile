@@ -24,6 +24,7 @@ gem 'spring', group: :development
 gem 'puma'
 
 gem "paperclip", "~> 4.2"
+gem 'posix-spawn' # see http://adamniedzielski.github.io/blog/2014/02/05/fighting-paperclip-errno-enomem-error/
 
 gem 'rails-assets-underscore', '1.6.0'
 gem 'rails-assets-backbone', '1.1.2'
