@@ -37,7 +37,7 @@
         },
 
         onDelete: function(event) {
-            this.model.destroy();
+            this.model.destroy({ wait: true });
 
             event.preventDefault();
         }

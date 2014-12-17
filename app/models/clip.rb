@@ -7,6 +7,7 @@ class Clip < ActiveRecord::Base
       path: "uploads/:id_partition/:hash.:extension",
       size: { in: 0..250.kilobytes },
       styles: { medium: ["300x300>", :jpg], thumb: ["100x100>", :jpg] },
+      preserve_files: true,
       hash_secret: Rails.application.secrets.secret_key_base
 
     validates_attachment_content_type snapshot_sym,
