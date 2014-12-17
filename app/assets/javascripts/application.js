@@ -11,6 +11,7 @@
 //= require ./setup
 //= require ./clips
 //= require ./camera
+//= require ./services
 
 $(function() {
     PhotoBooth.start();

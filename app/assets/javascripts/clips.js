@@ -16,54 +16,6 @@
             }
 
             return this.get('snapshots');
-        },
-
-        sync: function(method, model, options) {
-            var data;
-
-            if (!options.noCSRF) {
-              var beforeSend = options.beforeSend;
-
-              // Set X-CSRF-Token HTTP header
-              options.beforeSend = function(xhr) {
-                var token = $("meta[name='csrf-token']").attr("content");
-
-                if (token) {
-                  xhr.setRequestHeader('X-CSRF-Token', token);
-                }
-                if (beforeSend) {
-                  return beforeSend.apply(this, arguments);
-                }
-              };
-            }
-
-            // Prepare data for multipart upload
-            if (options.multipart) {
-                var form = new FormData();
-                data = model.toJSON();
-
-                // _.each(data, function(fieldValue, fieldName) {
-                //     if (_.isObject(fieldValue)) {
-                //         _.each(fieldValue, function(propValue, propName) {
-                //         form.append(fieldName + '[' +  propName + ']', propValue);
-                //     });
-                //     } else {
-                //         form.append(fieldName, fieldValue);
-                //     }
-                // });
-
-                this.getSnapshots().each(function(snapshot, index) {
-                    form.append('clip[snapshot' + (index + 1).toString() + ']', snapshot.get('data'));
-                }, this);
-
-                options.data = form;
-                // Increase request timeout for file uploads
-                options.timeout = 30000;
-                options.contentType = false;
-                options.processData = false;
-            }
-
-            return Backbone.sync.call(this, method, model, options);
         }
     });
 
@@ -96,27 +48,60 @@
             'click .btn-start': 'onStart'
         },
 
+        initialize: function(options) {
+            this.listenTo(this.model, 'request', this.onRequest);
+            this.listenTo(this.model, 'sync', this.onSync);
+            this.listenTo(this.model, 'error', this.onError);
+        },
+
         onShow: function() {
-            PhotoBooth.Camera.startVideo(this.$("#snap-preview"));
+            var $message = this.$(".row-info");
+
+            if (!PhotoBooth.FeatureService.isVideoSupported()) {
+                $message
+                    .text("Sorry, your browser does not support video stream API")
+                    .show();
+                return;
+            }
+
+            this.camera = new PhotoBooth.Camera(this.$("#snap-preview"));
+            this.camera.startVideo()
+                .done(function() {
+                    var $text = $("<p>")
+                        .addClass("text-info")
+                        .text("Take your time to make a good impression. When you were ready click start button");
+
+                    $message.html($text);
+
+                })
+                .fail(function(error) {
+                    var $text = $("<p>")
+                        .addClass("text-warning")
+                        .text(error.message);
+
+                    $message.html($text);
+                });
         },
 
         onBeforeDestroy: function() {
-            PhotoBooth.Camera.stopVideo(this.$("#snap-preview"));
+            if (this.camera) {
+                this.camera.stopVideo();
+            }
         },
 
         onStart: function(event) {
-            var countdownSeconds = 2,
+            var countdownSeconds = 1,
                 snapshotsCount = 4,
                 remainingSnapshots = snapshotsCount,
                 countdown = countdownSeconds,
-                $counter = this.$("#message"),
-                $flash = this.$(".booth-flash");
+                $counter = this.$(".message-countdown"),
+                $flash = this.$(".cam-flash");
 
             var that = this;
 
             function takeNext () {
                 if (remainingSnapshots <= 0) {
-                    PhotoBooth.Camera.stopVideo(this.$("#snap-preview"));
+                    that.camera.stopVideo();
                     that.model.save(null, { multipart: true });
                     return;
                 }
@@ -149,19 +134,46 @@
             event.preventDefault();
         },
 
+        onRequest: function(model) {
+            var $message = this.$(".row-info"),
+                $text = $("<p>")
+                .addClass("text-info")
+                .text("Sending clip contents....");
+
+            $message.html($text);
+        },
+
+        onSync: function(model) {
+            var $message = this.$(".row-info"),
+                $text = $("<p>")
+                .addClass("text-success")
+                .text("Clip created successfully!");
+
+            $message.html($text);
+        },
+
+        onError: function(model) {
+            var $message = this.$(".row-info"),
+                $text = $("<p>")
+                .addClass("text-danger")
+                .text("There was an error creating your clip :O");
+
+            $message.html($text);
+        },
+
         saveSnapshot: function() {
-            var canvas = PhotoBooth.Camera.capture(this.$("#snap-preview"), {
-                width: 480,
-                height: 320
-            });
             var model = this.model;
 
-            // Convert canvas to blob data
-            canvas.toBlob(function(blob) {
+            this.camera.capture({
+                width: 480,
+                height: 320,
+                type: "image/jpeg",
+                quality: 0.8
+            }).done(function(blob) {
                 model.addSnapshot({
                     data: blob
                 });
-            }, "image/png");
+            });
         }
     });
 
