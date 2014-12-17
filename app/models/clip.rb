@@ -4,7 +4,7 @@ class Clip < ActiveRecord::Base
 
     has_attached_file snapshot_sym,
       styles: { medium: "300x300>", thumb: "100x100>" },
-      path: ":hash.:extension",
+      path: ":hash.png",
       default_url: ":style/missing.png",
       hash_secret: Rails.application.secrets.secret_key_base
 
