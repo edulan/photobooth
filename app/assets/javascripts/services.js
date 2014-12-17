@@ -19,9 +19,16 @@
         this.stream = null;
     };
 
+    Camera.prototype.getVideo = function() {
+        if (!this.$video) {
+            return null;
+        }
+
+        return this.$video.get(0);
+    };
+
     Camera.prototype.startVideo = function() {
-        var $deferred = $.Deferred(),
-            $video = this.$video;
+        var $deferred = $.Deferred();
 
         if (!navigator.getUserMedia) {
             console.warn('Sorry, your browser does not support the HTML5 Stream API');
@@ -29,9 +36,17 @@
         }
 
         var successCallback = _.bind(function(stream) {
-            var video = $video.show().get(0);
-
-            this.stream = stream;
+            var video = this.getVideo();
+            // Client has requested to stop the video,
+            // but browser dialog confirmation is still
+            // waiting user confirmation.
+            //
+            // As soon as the user accepts video recording,
+            // the stream is closed.
+            if (!video) {
+                stream.stop();
+                return;
+            }
 
             if (video.mozSrcObject !== undefined) {
                 video.mozSrcObject = stream;
@@ -40,6 +55,7 @@
             }
 
             video.play();
+            this.stream = stream;
 
             $deferred.resolve();
         }, this);
@@ -64,7 +80,13 @@
     };
 
     Camera.prototype.stopVideo = function() {
-        var video = this.$video.get(0);
+        var video = this.getVideo();
+
+        if (video === null) {
+            return;
+        }
+
+        this.$video = null;
 
         video.pause();
         video.src = '';
@@ -76,14 +98,18 @@
     };
 
     /**
-     * Captures an snapshot from video stream
+     * Captures an snapshot from video stream.
+     *
+     * Returns a deferred object as data conversion
+     * is an asynchronous process.
+     *
      * @param  {Object} options [description]
      * @return {Deferred}         [description]
      */
     Camera.prototype.capture = function(options) {
-        var $canvas = $("<canvas>")
+        var $deferred = $.Deferred(),
+            $canvas = $("<canvas>")
                 .attr(options),
-            $deferred = $.Deferred(),
             canvas = $canvas.get(0),
             video = this.$video.get(0);
 
