@@ -7,6 +7,10 @@
     PhotoBooth.Models.Clip = Backbone.Model.extend({
         urlRoot: "api/clips",
 
+        defaults: {
+            votes: 0
+        },
+
         addSnapshot: function(params) {
             var snapshots = this.getSnapshots();
 
@@ -19,6 +23,16 @@
             }
 
             return this.get('snapshots');
+        },
+
+        upvote: function() {
+            var currentVotes = this.get('votes');
+
+            return this.save({ votes: currentVotes + 1 }, {
+                attrs: { id: this.id },
+                url: this.url() + '/upvote',
+                wait: true
+            });
         }
     });
 

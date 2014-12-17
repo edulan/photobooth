@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141217175923) do
+ActiveRecord::Schema.define(version: 20141217183828) do
 
   create_table "clips", force: true do |t|
     t.datetime "created_at"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20141217175923) do
     t.boolean  "snapshot2_processing"
     t.boolean  "snapshot3_processing"
     t.boolean  "snapshot4_processing"
+    t.integer  "votes",                  default: 0
   end
 
 end

@@ -2,14 +2,19 @@
   <h1>PhotoBooth</h1>
 </div>
 <div class="row">
-  <div class="clip-group clip-medium">
-    <div class="row">
-      <% _.each(snapshots, function(snapshot) { %>
-        <div class="clip-image-wrapper">
-          <img class="clip-image" src="<%= snapshot.medium_url %>" alt="">
-        </div>
-      <% }) %>
+  <div class="col-md-8">
+    <div class="clip-group clip-medium">
+      <div class="row">
+        <% _.each(snapshots, function(snapshot) { %>
+          <div class="clip-image-wrapper">
+            <img class="clip-image" src="<%= snapshot.medium_url %>" alt="">
+          </div>
+        <% }) %>
+      </div>
     </div>
+  </div>
+  <div class="col-md-4">
+    <a href="#" class="btn btn-default btn-like">Like (<%= votes %>)</a>
   </div>
 </div>
 <div class="row">

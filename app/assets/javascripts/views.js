@@ -20,6 +20,7 @@
         template: "clips/show",
 
         events: {
+            "click .btn-like": "onLike",
             "click .btn-delete": "onDelete"
         },
 
@@ -34,6 +35,12 @@
 
         onDestroyed: function(model) {
             PhotoBooth.appRouter.navigate("clips", { trigger: true });
+        },
+
+        onLike: function(event) {
+            this.model.upvote();
+
+            event.preventDefault();
         },
 
         onDelete: function(event) {
