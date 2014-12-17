@@ -66,6 +66,7 @@ GEM
       dotenv (= 1.0.2)
     dropbox-sdk (1.6.4)
       json
+    ejs (1.1.1)
     erubis (2.7.0)
     execjs (2.2.2)
     factory_girl (4.5.0)
@@ -223,6 +224,7 @@ DEPENDENCIES
   database_cleaner
   delayed_paperclip
   dotenv-rails
+  ejs
   factory_girl_rails
   jbuilder (~> 2.0)
   paperclip (~> 4.2)

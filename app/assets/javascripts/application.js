@@ -7,6 +7,8 @@
 //= require backbone.babysitter
 //= require backbone.wreqr
 //= require backbone.marionette
+//= require_tree ./templates
+//= require ./setup
 //= require ./clips
 //= require ./camera
 

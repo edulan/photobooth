@@ -73,30 +73,13 @@
     });
 
     PhotoBooth.ClipItemView = Marionette.ItemView.extend({
-        template: _.template([
-            '<div class="row">',
-                '<% _.each(snapshots, function(snapshot) { %>',
-                    '<div class="clip-image-wrapper">',
-                        '<img class="clip-image" src="<%= snapshot.thumb_url %>" alt="">',
-                    '</div>',
-                '<% }) %>',
-            '</div>'
-        ].join("\n")),
-
+        template: "clips/item",
         className: "clip-group"
+
     });
 
     PhotoBooth.ClipsView = Marionette.CompositeView.extend({
-        template: _.template([
-            '<div class="row">',
-                '<h1>PhotoBooth Hall</h1>',
-            '</div>',
-            '<div class="row">',
-                '<a class="btn btn-primary pull-right" href="#new">New Clip</a>',
-            '</div>',
-            '<div class="row row-clip"></div>'
-        ].join("\n")),
-
+        template: "clips/index",
         className: "clips",
 
         childView: PhotoBooth.ClipItemView,
@@ -107,25 +90,7 @@
     });
 
     PhotoBooth.BoothView = Marionette.CompositeView.extend({
-        template: _.template([
-            '<div class="row">',
-            '    <h1>New clip</h1>',
-            '</div>',
-            '<div class="row">',
-            '    <p class="text-info">Take your time to make a good impression.</p>',
-            '    <p class="text-info">When you\'re ready click start</p>',
-            '</div>',
-            '<div class="row text-center">',
-            '    <div class="booth-flash"></div>',
-            '    <video id="snap-preview" class="center-block" width="480" height="320" autoplay></video>',
-            '    <p id="message" class="text-primary"></p>',
-            '</div>',
-            '<div class="row text-right">',
-            '    <a href="#hall" class="btn btn-default btn-back">Back</a>',
-            '    <a href="#" class="btn btn-primary btn-start">Start!</a>',
-            '</div>',
-            '<div class="row row-snapshots"></div>',
-        ].join("\n")),
+        template: "clips/new",
 
         events: {
             'click .btn-start': 'onStart'
