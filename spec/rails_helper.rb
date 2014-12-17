@@ -77,6 +77,9 @@ RSpec.configure do |config|
     # Clear session data
     Capybara.reset_sessions!
   end
+
+  # Stub S3 requests
+  AWS.stub!
 end
 
 Capybara.javascript_driver = :poltergeist

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216180300) do
+ActiveRecord::Schema.define(version: 20141217175923) do
 
   create_table "clips", force: true do |t|
     t.datetime "created_at"
@@ -32,6 +32,10 @@ ActiveRecord::Schema.define(version: 20141216180300) do
     t.string   "snapshot4_content_type"
     t.integer  "snapshot4_file_size"
     t.datetime "snapshot4_updated_at"
+    t.boolean  "snapshot1_processing"
+    t.boolean  "snapshot2_processing"
+    t.boolean  "snapshot3_processing"
+    t.boolean  "snapshot4_processing"
   end
 
 end

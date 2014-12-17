@@ -18,7 +18,7 @@ class Clip < ActiveRecord::Base
     snapshot_sym = "snapshot#{i}".to_sym
 
     process_in_background snapshot_sym,
-      processing_image_url: ":style/processing.png"
+      processing_image_url: "assets/:style/processing.png"
   end
 
   def snapshots
