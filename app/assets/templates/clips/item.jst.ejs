@@ -1,9 +1,7 @@
 <a href="#clips/<%= id %>">
-  <div class="row">
-    <% _.each(snapshots, function(snapshot) { %>
-      <div class="clip-image-wrapper">
-        <img class="clip-image" src="<%= snapshot.thumb_url %>" alt="">
-      </div>
-    <% }) %>
-  </div>
+  <% _.each(snapshots, function(snapshot) { %>
+    <div class="clip-image-wrapper">
+      <img class="clip-image" src="<%= snapshot.thumb_url %>" alt="">
+    </div>
+  <% }) %>
 </a>

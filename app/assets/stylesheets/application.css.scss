@@ -23,12 +23,6 @@
     display: inline;
 }
 
-.row-clip {
-    margin-top: 15px;
-    margin-left: -22.5px;
-    margin-right: -22.5px;
-}
-
 .clip-group {
     float: left;
     margin: 10px;
@@ -39,7 +33,20 @@
     .row {
         margin-left: auto;
         margin-right: auto;
-        width: 224px;
+    }
+}
+
+.clip-medium {
+    width: 668px;
+    padding: 10px;
+
+    .clip-image {
+        width: 300px;
+        height: 200px;
+    }
+
+    .clip-image-wrapper {
+        margin: 12px;
     }
 }
 
@@ -51,18 +58,6 @@
 .clip-image {
     width: 100px;
     height: 63px;
-}
-
-.clip-thumbnail {
-    padding: 16x 0;
-}
-
-.clip-thumbnail-left {
-    padding-right: 2.5px;
-}
-
-.clip-thumbnail-right {
-    padding-left: 2.5px;
 }
 
 .cam-flash {
@@ -91,4 +86,19 @@ p.message-countdown {
 
 .row-info {
     font-size: 1.5em;
+}
+
+.row-clip {
+    margin-top: 15px;
+    margin-left: -22.5px;
+    margin-right: -22.5px;
+}
+
+.btn-group-vertical > .btn-like:first-child:not(:last-child) {
+    border-radius: 4px;
+}
+
+.btn-group-vertical > .btn.btn-delete {
+    margin-top: 10px;
+    text-align: right;
 }

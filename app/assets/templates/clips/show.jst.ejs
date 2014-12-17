@@ -4,21 +4,19 @@
 <div class="row">
   <div class="col-md-8">
     <div class="clip-group clip-medium">
-      <div class="row">
-        <% _.each(snapshots, function(snapshot) { %>
-          <div class="clip-image-wrapper">
-            <img class="clip-image" src="<%= snapshot.medium_url %>" alt="">
-          </div>
-        <% }) %>
-      </div>
+      <% _.each(snapshots, function(snapshot) { %>
+        <div class="clip-image-wrapper">
+          <img class="clip-image" src="<%= snapshot.medium_url %>" alt="">
+        </div>
+      <% }) %>
     </div>
   </div>
   <div class="col-md-4">
-    <a href="#" class="btn btn-default btn-like">Like (<%= votes %>)</a>
-  </div>
-</div>
-<div class="row">
-  <a class="btn btn-xs btn-danger btn-delete pull-left" href="#">
+<div class="btn-group-vertical">
+  <a href="#" class="btn btn-default btn-like">Like (<%= votes %>)</a>
+  <a class="btn btn-xs btn-link btn-delete" href="#">
     delete
   </a>
+</div>
+  </div>
 </div>
