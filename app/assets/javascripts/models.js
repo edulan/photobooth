@@ -5,7 +5,7 @@
     PhotoBooth.Collections = PhotoBooth.Collections || {};
 
     PhotoBooth.Models.Clip = Backbone.Model.extend({
-        urlRoot: "/clips",
+        urlRoot: "api/clips",
 
         addSnapshot: function(params) {
             var snapshots = this.getSnapshots();
@@ -23,7 +23,7 @@
     });
 
     PhotoBooth.Collections.Clips = Backbone.Collection.extend({
-        url: "/clips",
+        url: "api/clips",
         model: PhotoBooth.Models.Clip
     });
 })(window);
