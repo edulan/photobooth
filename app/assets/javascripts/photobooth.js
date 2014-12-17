@@ -12,7 +12,7 @@
 
     PhotoBooth.addInitializer(function() {
         PhotoBooth.addRegions({
-            mainRegion: ".container"
+            mainRegion: "section"
         });
 
         PhotoBooth.appRouter = new PhotoBooth.Router({

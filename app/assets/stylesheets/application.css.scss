@@ -30,7 +30,7 @@
     padding: 5px;
     width: 234px;
 
-    .row {
+    .clip-wrapper {
         margin-left: auto;
         margin-right: auto;
     }
@@ -92,6 +92,12 @@ p.message-countdown {
     margin-top: 15px;
     margin-left: -22.5px;
     margin-right: -22.5px;
+}
+
+.btn-group-vertical {
+    .clip-actions {
+        margin-top: 10px;
+    }
 }
 
 .btn-group-vertical > .btn-like:first-child:not(:last-child) {
