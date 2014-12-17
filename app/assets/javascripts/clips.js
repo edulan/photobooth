@@ -35,10 +35,7 @@
         className: "clips",
 
         childView: PhotoBooth.ClipItemView,
-
-        appendHtml: function(collectionView, itemView) {
-            collectionView.$('.row-clip').append(itemView.el);
-        }
+        childViewContainer: '.row-clip'
     });
 
     PhotoBooth.BoothView = Marionette.CompositeView.extend({
