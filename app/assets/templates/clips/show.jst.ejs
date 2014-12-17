@@ -1,0 +1,14 @@
+<div class="row">
+  <h1>PhotoBooth</h1>
+</div>
+<div class="row">
+  <div class="clip-group clip-medium">
+    <div class="row">
+      <% _.each(snapshots, function(snapshot) { %>
+        <div class="clip-image-wrapper">
+          <img class="clip-image" src="<%= snapshot.medium_url %>" alt="">
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>

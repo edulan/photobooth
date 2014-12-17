@@ -6,7 +6,6 @@
     PhotoBooth.Views.ClipItem = Marionette.ItemView.extend({
         template: "clips/item",
         className: "clip-group"
-
     });
 
     PhotoBooth.Views.Clips = Marionette.CompositeView.extend({
@@ -15,6 +14,18 @@
 
         childView: PhotoBooth.Views.ClipItem,
         childViewContainer: ".row-clip"
+    });
+
+    PhotoBooth.Views.ClipDetail = Marionette.ItemView.extend({
+        template: "clips/show",
+
+        initialize: function(options) {
+            this.listenTo(this.model, 'change', this.onChange);
+        },
+
+        onChange: function(model) {
+            this.render();
+        }
     });
 
     PhotoBooth.Views.Booth = Marionette.CompositeView.extend({
@@ -126,6 +137,11 @@
                 .text("Clip created successfully!");
 
             $message.html($text);
+
+            setTimeout(function() {
+                $message.html("Redirecting...");
+                PhotoBooth.appRouter.navigate("clips/" + model.id, { trigger: true });
+            }, 1500);
         },
 
         onError: function(model) {

@@ -7,7 +7,7 @@ feature "Listing clips", type: :feature, js: true do
   end
 
   scenario "shows all created clips" do
-    visit "#hall"
+    visit "#clips"
 
     expect(page).to have_css(".clip-group", count: 3)
   end

@@ -3,9 +3,10 @@
 
     PhotoBooth.Router = Marionette.AppRouter.extend({
         appRoutes: {
-            ""     : "index",
-            "hall" : "index",
-            "new"  : "create"
+            ""          : "index",
+            "clips"     : "index",
+            "clips/new" : "create",
+            "clips/:id" : "show"
         }
     });
 
@@ -14,7 +15,7 @@
             mainRegion: ".container"
         });
 
-        new PhotoBooth.Router({
+        PhotoBooth.appRouter = new PhotoBooth.Router({
             controller: new PhotoBooth.Controllers.Clips()
         });
 
