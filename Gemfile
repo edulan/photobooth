@@ -28,7 +28,8 @@ gem 'spring', group: :development
 gem 'puma'
 # Uploads
 gem "paperclip", "~> 4.2"
-gem "paperclip-dropbox", ">= 1.1.7"
+gem "aws-sdk"
+# gem "paperclip-dropbox", ">= 1.1.7"
 gem "delayed_paperclip"
 gem 'posix-spawn' # see http://adamniedzielski.github.io/blog/2014/02/05/fighting-paperclip-errno-enomem-error/
 # Background processing

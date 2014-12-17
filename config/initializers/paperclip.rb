@@ -1,9 +1,9 @@
-Paperclip::Attachment.default_options[:storage] = :dropbox
-Paperclip::Attachment.default_options[:dropbox_visibility] = "public"
-Paperclip::Attachment.default_options[:dropbox_credentials] = {
-  app_key: ENV["DROPBOX_APP_KEY"],
-  app_secret: ENV["DROPBOX_APP_SECRET"],
-  access_token: ENV["DROPBOX_ACCESS_TOKEN"],
-  access_token_secret: ENV["DROPBOX_ACCESS_TOKEN_SECRET"],
-  user_id: ENV["DROPBOX_USER_ID"]
+Paperclip::Attachment.default_options[:use_timestamp] = false
+
+Paperclip::Attachment.default_options[:storage] = :s3
+Paperclip::Attachment.default_options[:bucket] = ENV["S3_BUCKET"]
+Paperclip::Attachment.default_options[:s3_host_name] = "s3-eu-west-1.amazonaws.com"
+Paperclip::Attachment.default_options[:s3_credentials] = {
+  access_key_id: ENV["S3_ACCESS_KEY_ID"],
+  secret_access_key: ENV["S3_SECRET_ACCESS_KEY"]
 }
