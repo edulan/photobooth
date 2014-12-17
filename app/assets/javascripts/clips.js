@@ -90,7 +90,7 @@
         },
 
         onStart: function(event) {
-            var countdownSeconds = 1,
+            var countdownSeconds = PhotoBooth.Settings.countdownSeconds,
                 snapshotsCount = 4,
                 remainingSnapshots = snapshotsCount,
                 countdown = countdownSeconds,
