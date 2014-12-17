@@ -19,12 +19,27 @@
     PhotoBooth.Views.ClipDetail = Marionette.ItemView.extend({
         template: "clips/show",
 
-        initialize: function(options) {
-            this.listenTo(this.model, 'change', this.onChange);
+        events: {
+            "click .btn-delete": "onDelete"
         },
 
-        onChange: function(model) {
+        initialize: function(options) {
+            this.listenTo(this.model, 'change', this.onChanged);
+            this.listenTo(this.model, 'destroy', this.onDestroyed);
+        },
+
+        onChanged: function(model) {
             this.render();
+        },
+
+        onDestroyed: function(model) {
+            PhotoBooth.appRouter.navigate("clips", { trigger: true });
+        },
+
+        onDelete: function(event) {
+            this.model.destroy();
+
+            event.preventDefault();
         }
     });
 
@@ -37,7 +52,7 @@
 
         initialize: function(options) {
             this.listenTo(this.model, 'request', this.onRequest);
-            this.listenTo(this.model, 'sync', this.onSync);
+            this.listenTo(this.model, 'sync', this.onSynced);
             this.listenTo(this.model, 'error', this.onError);
         },
 
@@ -130,7 +145,7 @@
             $message.html($text);
         },
 
-        onSync: function(model) {
+        onSynced: function(model) {
             var $message = this.$(".row-info"),
                 $text = $("<p>")
                 .addClass("text-success")
