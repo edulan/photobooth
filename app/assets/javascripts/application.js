@@ -7,10 +7,14 @@
 //= require backbone.babysitter
 //= require backbone.wreqr
 //= require backbone.marionette
-//= require_tree ./templates
-//= require ./setup
-//= require ./clips
-//= require ./camera
+//= require backbone-overrides
+
+//= require_tree ../templates
+//= require ./marionette-jst
+//= require ./photobooth
+//= require ./models
+//= require ./views
+//= require ./controllers
 //= require ./services
 
 $(function() {

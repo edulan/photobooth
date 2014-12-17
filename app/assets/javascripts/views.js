@@ -1,44 +1,23 @@
 (function(root) {
-    var PhotoBooth = new Marionette.Application();
+    var PhotoBooth = root.PhotoBooth;
 
-    PhotoBooth.Clip = Backbone.Model.extend({
-        urlRoot: "/clips",
+    PhotoBooth.Views = PhotoBooth.Views || {};
 
-        addSnapshot: function(params) {
-            var snapshots = this.getSnapshots();
-
-            return snapshots.add(params);
-        },
-
-        getSnapshots: function() {
-            if (!this.has('snapshots')) {
-                this.set('snapshots', new Backbone.Collection());
-            }
-
-            return this.get('snapshots');
-        }
-    });
-
-    PhotoBooth.Clips = Backbone.Collection.extend({
-        url: "/clips",
-        model: PhotoBooth.Clip
-    });
-
-    PhotoBooth.ClipItemView = Marionette.ItemView.extend({
+    PhotoBooth.Views.ClipItem = Marionette.ItemView.extend({
         template: "clips/item",
         className: "clip-group"
 
     });
 
-    PhotoBooth.ClipsView = Marionette.CompositeView.extend({
+    PhotoBooth.Views.Clips = Marionette.CompositeView.extend({
         template: "clips/index",
         className: "clips",
 
-        childView: PhotoBooth.ClipItemView,
-        childViewContainer: '.row-clip'
+        childView: PhotoBooth.Views.ClipItem,
+        childViewContainer: ".row-clip"
     });
 
-    PhotoBooth.BoothView = Marionette.CompositeView.extend({
+    PhotoBooth.Views.Booth = Marionette.CompositeView.extend({
         template: "clips/new",
 
         events: {
@@ -54,19 +33,19 @@
         onShow: function() {
             var $message = this.$(".row-info");
 
-            if (!PhotoBooth.FeatureService.isVideoSupported()) {
+            if (!PhotoBooth.Services.FeatureDetection.isVideoSupported()) {
                 $message
                     .text("Sorry, your browser does not support video stream API")
                     .show();
                 return;
             }
 
-            this.camera = new PhotoBooth.Camera(this.$("#snap-preview"));
+            this.camera = new PhotoBooth.Services.Camera(this.$("#snap-preview"));
             this.camera.startVideo()
                 .done(function() {
                     var $text = $("<p>")
                         .addClass("text-info")
-                        .text("Take your time to make a good impression. When you were ready click start button");
+                        .text("Take your time to make a good impression. When you're ready click start button");
 
                     $message.html($text);
 
@@ -173,50 +152,4 @@
             });
         }
     });
-
-    PhotoBooth.ClipsController = Marionette.Controller.extend({
-        index: function() {
-            var collection = new PhotoBooth.Clips();
-            var view = new PhotoBooth.ClipsView({
-                collection: collection
-            });
-
-            collection.fetch();
-
-            PhotoBooth.mainRegion.show(view);
-        },
-
-        create: function() {
-            var model = new PhotoBooth.Clip();
-            var view = new PhotoBooth.BoothView({
-                model: model
-            });
-
-            PhotoBooth.mainRegion.show(view);
-        }
-    });
-
-    PhotoBooth.Router = Marionette.AppRouter.extend({
-        appRoutes: {
-            ""     : "index",
-            "hall" : "index",
-            "new"  : "create"
-        }
-    });
-
-    PhotoBooth.addInitializer(function() {
-        PhotoBooth.addRegions({
-            mainRegion: ".container"
-        });
-
-        var controller = new PhotoBooth.ClipsController();
-
-        new PhotoBooth.Router({
-            controller: controller
-        });
-
-        Backbone.history.start();
-    });
-
-    root.PhotoBooth = PhotoBooth;
 })(window);
