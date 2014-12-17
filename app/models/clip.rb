@@ -3,9 +3,10 @@ class Clip < ActiveRecord::Base
     snapshot_sym = "snapshot#{i}".to_sym
 
     has_attached_file snapshot_sym,
-      styles: { medium: "300x300>", thumb: "100x100>" },
-      path: ":hash.png",
-      default_url: ":style/missing.png",
+      url: "uploads/:id_partition/:hash.:extension",
+      path: "uploads/:id_partition/:hash.:extension",
+      size: { in: 0..250.kilobytes },
+      styles: { medium: ["300x300>", :jpg], thumb: ["100x100>", :jpg] },
       hash_secret: Rails.application.secrets.secret_key_base
 
     validates_attachment_content_type snapshot_sym,
