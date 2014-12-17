@@ -5,7 +5,7 @@ class ClipsController < ApplicationController
 
   # GET /clips.json
   def index
-    @clips = Clip.all
+    @clips = Clip.all.order(votes: :desc)
   end
 
   # GET /clips/1.json

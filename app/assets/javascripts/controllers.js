@@ -13,6 +13,7 @@
                 collection: this.collection
             });
 
+            this.collection.sort();
             this.collection.fetch();
 
             PhotoBooth.mainRegion.show(view);
