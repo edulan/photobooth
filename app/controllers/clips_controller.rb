@@ -28,11 +28,11 @@ class ClipsController < ApplicationController
   # PATCH/PUT /clips/1.json
   def update
     respond_to do |format|
-      if @clip.update(clip_params)
-        format.json { render :show, status: :ok, location: @clip }
-      else
-        format.json { render json: @clip.errors, status: :unprocessable_entity }
-      end
+      # if @clip.update(clip_params)
+        format.json { head :no_content }
+      # else
+        # format.json { render json: @clip.errors, status: :unprocessable_entity }
+      # end
     end
   end
 
