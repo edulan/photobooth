@@ -169,7 +169,6 @@
                 snapshotsCount++;
 
                 if (snapshotsCount > maxSnapshots) {
-                    that.camera.stopVideo();
                     that.model.save(null, { multipart: true });
                     return;
                 }
@@ -203,7 +202,6 @@
         },
 
         onRetry: function(event) {
-            this.onBeforeDestroy();
             this.onShow();
 
             event.preventDefault();
@@ -227,11 +225,12 @@
                 .text("Clip created successfully!");
 
             $message.html($text);
+            this.camera.stopVideo();
 
             _.delay(function() {
                 $message.html("Redirecting...");
                 PhotoBooth.appRouter.navigate("clips/" + model.id, { trigger: true });
-            }, 1500);
+            }, 1000);
         },
 
         onError: function(model) {
@@ -241,6 +240,7 @@
                 .html('There was an error creating your clip, would you like to <a href="#" class="btn-retry">retry?</a>');
 
             $message.html($text);
+            this.camera.stopVideo();
         },
 
         saveSnapshot: function(name) {
