@@ -26,12 +26,21 @@
 
 .clip-group {
     float: left;
-    margin: 10px;
-    background: #fff;
 
     .clip-wrapper {
+        margin: 10px;
+        background: #fff;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .clip-votes {
+        margin-right: 7px;
+
+        span {
+            margin-right: 7px;
+            display: inline-block;
+        }
     }
 }
 
