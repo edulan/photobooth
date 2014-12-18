@@ -181,8 +181,9 @@
                         // Reset countdown
                         countdown = countdownSeconds;
                         $flash.show().fadeOut("slow");
-                        that.saveSnapshot('snapshot' + snapshotsCount);
-                        takeNext();
+                        that.saveSnapshot('snapshot' + snapshotsCount).done(function() {
+                            takeNext();
+                        });
                         return;
                     }
 
@@ -246,7 +247,7 @@
         saveSnapshot: function(name) {
             var model = this.model;
 
-            this.camera.capture({
+            return this.camera.capture({
                 width: 480,
                 height: 320,
                 type: "image/jpeg",
