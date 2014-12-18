@@ -5,7 +5,13 @@
 
     PhotoBooth.Views.ClipItem = Marionette.ItemView.extend({
         template: "clips/item",
-        className: "clip-group"
+        className: "clip-group clip-thumb"
+    });
+
+    PhotoBooth.Views.NoClips = Marionette.ItemView.extend({
+        tagName: "p",
+        className: "text-info text-center message-no-clips",
+        template: "clips/empty"
     });
 
     PhotoBooth.Views.Clips = Marionette.CompositeView.extend({
@@ -13,7 +19,8 @@
         className: "clips",
 
         childView: PhotoBooth.Views.ClipItem,
-        childViewContainer: ".row-clip"
+        childViewContainer: ".row-clip",
+        emptyView: PhotoBooth.Views.NoClips
     });
 
     PhotoBooth.Views.ClipDetail = Marionette.ItemView.extend({
@@ -26,8 +33,45 @@
 
         initialize: function(options) {
             this.listenTo(this.model, 'change', this.onChanged);
+            // this.listenTo(this.model, 'sync', this.onSynced);
             this.listenTo(this.model, 'destroy', this.onDestroyed);
         },
+
+        onShow: function() {
+            this.checkDelay = 0;
+            this.checkCount = 0;
+            this.checkProcessing(this.model);
+        },
+
+        checkProcessing: function(model) {
+            if (!model.isProcessing()) {
+                return;
+            }
+
+            if (this.checkCount > 4) {
+                this.checkDelay = 0;
+                this.checkCount = 0;
+                return;
+            }
+
+            this.checkDelay = 1000 * (Math.pow(2, this.checkCount) + Math.random());
+            this.checkCount += 1;
+
+            model.fetch({
+                success: _.bind(function(model) {
+                    _.delay(
+                        _.bind(this.checkProcessing, this),
+                        this.checkDelay,
+                        model);
+                }, this)
+            });
+        },
+
+        // onSynced: function(model) {
+        //     this.checkDelay = 0;
+        //     this.checkCount = 0;
+        //     this.checkProcessing(model);
+        // },
 
         onChanged: function(model) {
             this.render();
@@ -44,7 +88,9 @@
         },
 
         onDelete: function(event) {
-            this.model.destroy({ wait: true });
+            if (confirm('Are you sure?')) {
+                this.model.destroy({ wait: true });
+            }
 
             event.preventDefault();
         }
@@ -100,8 +146,8 @@
 
         onStart: function(event) {
             var countdownSeconds = PhotoBooth.Settings.countdownSeconds,
-                snapshotsCount = 4,
-                remainingSnapshots = snapshotsCount,
+                maxSnapshots = 4,
+                snapshotsCount = 0,
                 countdown = countdownSeconds,
                 $counter = this.$(".message-countdown"),
                 $flash = this.$(".cam-flash");
@@ -109,23 +155,23 @@
             var that = this;
 
             function takeNext () {
-                if (remainingSnapshots <= 0) {
+                snapshotsCount++;
+
+                if (snapshotsCount > maxSnapshots) {
                     that.camera.stopVideo();
                     that.model.save(null, { multipart: true });
                     return;
                 }
 
-                remainingSnapshots--;
 
                 function updateCounter () {
-                    // $counter.text(--countdown);
                     countdown--;
 
                     if (countdown <= 0) {
                         // Reset countdown
                         countdown = countdownSeconds;
                         $flash.show().fadeOut("slow");
-                        that.saveSnapshot();
+                        that.saveSnapshot('snapshot' + snapshotsCount);
                         takeNext();
                         return;
                     }
@@ -175,7 +221,7 @@
             $message.html($text);
         },
 
-        saveSnapshot: function() {
+        saveSnapshot: function(name) {
             var model = this.model;
 
             this.camera.capture({
@@ -184,9 +230,10 @@
                 type: "image/jpeg",
                 quality: 0.8
             }).done(function(blob) {
-                model.addSnapshot({
-                    data: blob
-                });
+                var data = {};
+
+                data[name] = blob;
+                model.addFormData(data);
             });
         }
     });

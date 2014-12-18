@@ -18,6 +18,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "bootswatch/darkly/bootswatch";
+@import "font-awesome";
 
 .section-title {
     display: inline;
@@ -27,8 +28,6 @@
     float: left;
     margin: 10px;
     background: #fff;
-    padding: 5px;
-    width: 234px;
 
     .clip-wrapper {
         margin-left: auto;
@@ -36,28 +35,54 @@
     }
 }
 
+.clip-thumb {
+    width: 234px;
+    padding: 5px;
+
+    img, p {
+        width: 100px;
+        height: 63px;
+    }
+
+    p {
+        float: left;
+        margin: 0;
+        text-align: center;
+    }
+
+    .clip-content {
+        margin: 6px;
+        float: left;
+
+        .clip-processing {
+            line-height: 4em;
+        }
+    }
+}
+
 .clip-medium {
     width: 668px;
     padding: 10px;
 
-    .clip-image {
+    img, p {
         width: 300px;
         height: 200px;
     }
 
-    .clip-image-wrapper {
-        margin: 12px;
+    p {
+        float: left;
+        margin: 0;
+        text-align: center;
     }
-}
 
-.clip-image-wrapper {
-    margin: 6px;
-    float: left;
-}
+    .clip-content {
+        margin: 12px;
+        float: left;
 
-.clip-image {
-    width: 100px;
-    height: 63px;
+        .clip-processing {
+            line-height: 4em;
+        }
+    }
 }
 
 .cam-flash {
@@ -78,6 +103,11 @@
     font-size: 2em;
 }
 
+.message-no-clips {
+    margin: 10px;
+    font-size: 2em;
+}
+
 p.message-countdown {
     font-size: 3em;
     margin-top: 30px;
@@ -94,10 +124,8 @@ p.message-countdown {
     margin-right: -22.5px;
 }
 
-.btn-group-vertical {
-    .clip-actions {
-        margin-top: 10px;
-    }
+.btn-group-vertical.clip-actions {
+    margin-top: 10px;
 }
 
 .btn-group-vertical > .btn-like:first-child:not(:last-child) {
