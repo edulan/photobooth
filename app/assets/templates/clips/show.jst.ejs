@@ -4,9 +4,11 @@
       <div class="row clip-wrapper">
         <% _.each(snapshots, function(snapshot) { %>
         <div class="clip-content">
-          <% if (snapshot.medium_url.indexOf('processing') !== -1) { %>
+          <% if (snapshot.is_missing) { %>
+              <img src="assets/medium/missing.png" alt="missing">
+          <% } else if (snapshot.is_processing) { %>
               <p class="text-muted">
-                <i class="fa fa-cog fa-3x fa-spin clip-processing"></i>
+                <i class="fa fa-refresh fa-3x fa-spin clip-processing"></i>
               </p>
           <% } else { %>
               <img src="<%= snapshot.medium_url %>" alt="">

@@ -20,6 +20,10 @@
 @import "bootswatch/darkly/bootswatch";
 @import "font-awesome";
 
+.jumbotron {
+    margin-bottom: 0;
+}
+
 .section-title {
     display: inline;
 }
@@ -32,10 +36,14 @@
         background: #fff;
         margin-left: auto;
         margin-right: auto;
+        margin-bottom: 0;
     }
 
     .clip-votes {
-        margin-right: 7px;
+        background: white;
+        color: black;
+        padding-right: 7px;
+        padding-bottom: 7px;
 
         span {
             margin-right: 7px;
@@ -54,6 +62,8 @@
     }
 
     p {
+        border: 1px solid #605e5e;
+        border-radius: 4px;
         float: left;
         margin: 0;
         text-align: center;
@@ -79,6 +89,8 @@
     }
 
     p {
+        border: 1px solid #605e5e;
+        border-radius: 4px;
         float: left;
         margin: 0;
         text-align: center;
@@ -118,8 +130,8 @@
 }
 
 p.message-countdown {
-    font-size: 3em;
-    margin-top: 30px;
+    font-size: 6em;
+    margin-top: 0;
     margin-bottom: 0;
 }
 

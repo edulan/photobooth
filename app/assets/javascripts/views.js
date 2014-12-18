@@ -33,8 +33,8 @@
 
         initialize: function(options) {
             this.listenTo(this.model, 'change', this.onChanged);
-            // this.listenTo(this.model, 'sync', this.onSynced);
             this.listenTo(this.model, 'destroy', this.onDestroyed);
+            this.listenTo(this.model, 'error', this.onError);
         },
 
         onShow: function() {
@@ -51,6 +51,7 @@
             if (this.checkCount > 4) {
                 this.checkDelay = 0;
                 this.checkCount = 0;
+                this.model.markAsMissing();
                 return;
             }
 
@@ -67,14 +68,17 @@
             });
         },
 
-        // onSynced: function(model) {
-        //     this.checkDelay = 0;
-        //     this.checkCount = 0;
-        //     this.checkProcessing(model);
-        // },
-
         onChanged: function(model) {
             this.render();
+        },
+
+        onError: function(model) {
+            var $message = this.$(".row-info"),
+                $text = $("<p>")
+                .addClass("text-danger")
+                .html('There was an error creating your clip, would you like to <a href="#" class="btn-retry">retry?</a>');
+
+            $message.html($text);
         },
 
         onDestroyed: function(model) {
@@ -100,7 +104,8 @@
         template: "clips/new",
 
         events: {
-            'click .btn-start': 'onStart'
+            'click .btn-start': 'onStart',
+            'click .btn-retry': 'onRetry'
         },
 
         initialize: function(options) {
@@ -110,7 +115,8 @@
         },
 
         onShow: function() {
-            var $message = this.$(".row-info");
+            var $message = this.$(".row-info"),
+                $start = this.$(".btn-start");
 
             if (!PhotoBooth.Services.FeatureDetection.isVideoSupported()) {
                 $message
@@ -118,6 +124,8 @@
                     .show();
                 return;
             }
+
+            $message.empty();
 
             this.camera = new PhotoBooth.Services.Camera(this.$("#snap-preview"));
             this.camera.startVideo()
@@ -127,6 +135,7 @@
                         .text("Take your time to make a good impression. When you're ready click start button");
 
                     $message.html($text);
+                    $start.attr('disabled', false);
 
                 })
                 .fail(function(error) {
@@ -135,6 +144,7 @@
                         .text(error.message);
 
                     $message.html($text);
+                    $start.attr('disabled', true);
                 });
         },
 
@@ -150,7 +160,8 @@
                 snapshotsCount = 0,
                 countdown = countdownSeconds,
                 $counter = this.$(".message-countdown"),
-                $flash = this.$(".cam-flash");
+                $flash = this.$(".cam-flash"),
+                $start = this.$(".btn-start");
 
             var that = this;
 
@@ -184,18 +195,29 @@
                 setTimeout(updateCounter, 1000);
             }
 
+            $start.attr('disabled', true);
+            $counter.show();
             takeNext();
+
+            event.preventDefault();
+        },
+
+        onRetry: function(event) {
+            this.onBeforeDestroy();
+            this.onShow();
 
             event.preventDefault();
         },
 
         onRequest: function(model) {
             var $message = this.$(".row-info"),
+                $counter = this.$(".message-countdown"),
                 $text = $("<p>")
                 .addClass("text-info")
-                .text("Sending clip contents....");
+                .html('Sending clip contents <i class="fa fa-cog fa-spin"></i>');
 
             $message.html($text);
+            $counter.hide();
         },
 
         onSynced: function(model) {
@@ -206,7 +228,7 @@
 
             $message.html($text);
 
-            setTimeout(function() {
+            _.delay(function() {
                 $message.html("Redirecting...");
                 PhotoBooth.appRouter.navigate("clips/" + model.id, { trigger: true });
             }, 1500);
@@ -216,7 +238,7 @@
             var $message = this.$(".row-info"),
                 $text = $("<p>")
                 .addClass("text-danger")
-                .text("There was an error creating your clip :O");
+                .html('There was an error creating your clip, would you like to <a href="#" class="btn-retry">retry?</a>');
 
             $message.html($text);
         },

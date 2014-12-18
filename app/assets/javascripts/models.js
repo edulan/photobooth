@@ -30,6 +30,18 @@
             });
         },
 
+        markAsMissing: function() {
+            var snapshots = this.get('snapshots');
+
+            _.each(snapshots, function(snapshot) {
+                if (snapshot.is_processing) {
+                    snapshot.is_missing = true;
+                }
+            });
+
+            this.trigger('change', this);
+        },
+
         getFormData: function() {
             return this.formData;
         },
