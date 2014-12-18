@@ -76,7 +76,7 @@
             var $message = this.$(".row-info"),
                 $text = $("<p>")
                 .addClass("text-danger")
-                .html('There was an error creating your clip, would you like to <a href="#" class="btn-retry">retry?</a>');
+                .html('Upss! Seems like this clip has been deleted');
 
             $message.html($text);
         },
