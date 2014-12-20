@@ -1,5 +1,4 @@
 Paperclip::Attachment.default_options[:use_timestamp] = false
-
 Paperclip::Attachment.default_options[:storage] = :s3
 Paperclip::Attachment.default_options[:bucket] = ENV["S3_BUCKET"]
 Paperclip::Attachment.default_options[:s3_host_name] = "s3-eu-west-1.amazonaws.com"

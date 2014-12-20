@@ -3,8 +3,9 @@ class Clip < ActiveRecord::Base
     snapshot_sym = "snapshot#{i}".to_sym
 
     has_attached_file snapshot_sym,
-      url: "uploads/:id_partition/:hash.:extension",
       path: "uploads/:id_partition/:hash.:extension",
+      url: "uploads/:id_partition/:hash.:extension",
+      default_url: "assets/:style/missing.png",
       size: { in: 0..250.kilobytes },
       styles: { medium: ["300x300>", :jpg], thumb: ["100x100>", :jpg] },
       preserve_files: true,
