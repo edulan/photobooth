@@ -5,6 +5,7 @@ class ClipsController < ApplicationController
 
   # GET /clips.json
   def index
+    { :message => "fuuuuuuuuuuu" }.each do |a|; puts a; end
     @clips = Clip.all.order(votes: :desc)
   end
 
