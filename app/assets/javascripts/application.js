@@ -1,4 +1,6 @@
 //= require polyfills/canvas-to-blob
+//= require trackingjs/tracking
+//= require trackingjs/face
 //= require jquery
 //= require bootstrap
 //= require bootstrap-sprockets
