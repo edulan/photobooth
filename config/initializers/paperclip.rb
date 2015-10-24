@@ -21,4 +21,4 @@ else
   }
 end
 
-Paperclip::Attachment.default_options = options
+Paperclip::Attachment.default_options.merge!(options)
