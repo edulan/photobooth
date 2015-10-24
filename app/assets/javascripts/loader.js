@@ -1,15 +1,6 @@
 (function(root) {
     var PhotoBooth = new Marionette.Application();
 
-    PhotoBooth.Router = Marionette.AppRouter.extend({
-        appRoutes: {
-            ""          : "index",
-            "clips"     : "index",
-            "clips/new" : "create",
-            "clips/:id" : "show"
-        }
-    });
-
     PhotoBooth.addInitializer(function() {
         PhotoBooth.addRegions({
             mainRegion: "section"
@@ -24,3 +15,5 @@
 
     root.PhotoBooth = PhotoBooth;
 })(window);
+
+

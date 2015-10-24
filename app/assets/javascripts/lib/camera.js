@@ -1,20 +1,9 @@
 (function(root) {
     var PhotoBooth = root.PhotoBooth;
 
-    PhotoBooth.Services = PhotoBooth.Services || {};
+    PhotoBooth.Lib = PhotoBooth.Lib || {};
 
-    PhotoBooth.Services.FeatureDetection = {
-        isVideoSupported: function() {
-            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-                navigator.mozGetUserMedia || navigator.msGetUserMedia;
-            window.URL = window.URL || window.webkitURL ||
-                window.mozURL || window.msURL;
-
-            return !!navigator.getUserMedia;
-        }
-    };
-
-    var Camera = PhotoBooth.Services.Camera = function($el) {
+    var Camera = PhotoBooth.Lib.Camera = function($el) {
         this.$video = $el;
         this.stream = null;
     };

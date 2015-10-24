@@ -2,7 +2,6 @@
     var PhotoBooth = root.PhotoBooth;
 
     PhotoBooth.Models = PhotoBooth.Models || {};
-    PhotoBooth.Collections = PhotoBooth.Collections || {};
 
     PhotoBooth.Models.Clip = Backbone.Model.extend({
         urlRoot: "api/clips",
@@ -64,19 +63,6 @@
             }, this);
 
             return form;
-        }
-    });
-
-    PhotoBooth.Collections.Clips = Backbone.Collection.extend({
-        url: "api/clips",
-
-        model: PhotoBooth.Models.Clip,
-
-        comparator: function(model1, model2) {
-            var v1 = model1.get('votes'),
-                v2 = model2.get('votes');
-
-            return v1 < v2 ? 1 : v1 > v2 ? -1 : 0;
         }
     });
 })(window);
