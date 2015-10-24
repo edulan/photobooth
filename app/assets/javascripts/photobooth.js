@@ -12,6 +12,8 @@ PhotoBooth.addInitializer(function() {
     controller: new ClipsController()
   });
 
+  PhotoBooth.Vars = {};
+
   Backbone.history.start();
 });
 

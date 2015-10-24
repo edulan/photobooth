@@ -12,7 +12,7 @@ var ClipBooth = Marionette.CompositeView.extend({
   ui: {
     message: '.row-info',
     startButton: '.btn-start',
-    falsh: '.cam-flash',
+    flash: '.cam-flash',
     counter: '.message-countdown',
     video: '#snap-preview'
   },
@@ -35,7 +35,7 @@ var ClipBooth = Marionette.CompositeView.extend({
 
     this.ui.message.empty();
 
-    this.camera = Camera(this.ui.video);
+    this.camera = new Camera(this.ui.video);
     this.camera.startVideo()
       .done(function() {
         var $text = $("<p>")
@@ -63,7 +63,7 @@ var ClipBooth = Marionette.CompositeView.extend({
   },
 
   onStart: function(event) {
-    var countdownSeconds = PhotoBooth.Settings.countdownSeconds,
+    var countdownSeconds = PhotoBooth.Vars.countdownSeconds || 5,
       maxSnapshots = 4,
       snapshotsCount = 0,
       countdown = countdownSeconds;
@@ -119,7 +119,7 @@ var ClipBooth = Marionette.CompositeView.extend({
       .html('Sending clip contents <i class="fa fa-cog fa-spin"></i>');
 
     this.ui.message.html($text);
-    thus.ui.counter.hide();
+    this.ui.counter.hide();
   },
 
   onSynced: function(model) {

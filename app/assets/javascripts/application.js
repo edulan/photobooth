@@ -10,8 +10,8 @@
 //= require backbone-extensions
 //= require marionette-extensions
 
-$(function() {
-  var PhotoBooth = require('photobooth');
+//= require_tree ./templates
 
-  PhotoBooth.start();
+$(function() {
+  require('photobooth').start();
 });
