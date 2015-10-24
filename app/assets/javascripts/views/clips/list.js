@@ -1,14 +1,12 @@
-(function(root) {
-    var PhotoBooth = root.PhotoBooth;
+var ClipItem = require('views/clips/item');
+var ClipEmpty = require('views/clips/empty');
 
-    PhotoBooth.Views = PhotoBooth.Views || {};
+var ClipList = Marionette.CompositeView.extend({
+  template: "clips/index",
+  className: "clips",
+  childView: ClipItem,
+  childViewContainer: ".row-clip",
+  emptyView: ClipEmpty
+});
 
-    PhotoBooth.Views.Clips.List = Marionette.CompositeView.extend({
-        template: "clips/index",
-        className: "clips",
-
-        childView: PhotoBooth.Views.Clips.Item,
-        childViewContainer: ".row-clip",
-        emptyView: PhotoBooth.Views.Clips.Empty
-    });
-})(window);
+module.exports = ClipList;

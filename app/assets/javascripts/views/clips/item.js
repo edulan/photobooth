@@ -1,10 +1,6 @@
-(function(root) {
-    var PhotoBooth = root.PhotoBooth;
+var ClipItem = Marionette.ItemView.extend({
+  template: "clips/item",
+  className: "clip-group clip-thumb"
+});
 
-    PhotoBooth.Views = PhotoBooth.Views || {};
-
-    PhotoBooth.Views.Clips.Item = Marionette.ItemView.extend({
-        template: "clips/item",
-        className: "clip-group clip-thumb"
-    });
-})(window);
+module.exports = ClipItem;

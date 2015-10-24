@@ -1,114 +1,110 @@
-(function(root) {
-    var PhotoBooth = root.PhotoBooth;
+var Camera = function($el) {
+  this.$video = $el;
+  this.stream = null;
+};
 
-    PhotoBooth.Lib = PhotoBooth.Lib || {};
+Camera.prototype.getVideoEl = function() {
+  if (!this.$video) {
+    return null;
+  }
 
-    var Camera = PhotoBooth.Lib.Camera = function($el) {
-        this.$video = $el;
-        this.stream = null;
-    };
+  return this.$video.get(0);
+};
 
-    Camera.prototype.getVideo = function() {
-        if (!this.$video) {
-            return null;
-        }
+Camera.prototype.startVideo = function() {
+  var self = this;
+  var $deferred = $.Deferred();
 
-        return this.$video.get(0);
-    };
+  if (!navigator.getUserMedia) {
+    console.warn('Sorry, your browser does not support the HTML5 Stream API');
+    return;
+  }
 
-    Camera.prototype.startVideo = function() {
-        var $deferred = $.Deferred();
+  function success(stream) {
+    var video = self.getVideoEl();
+    // Client has requested to stop the video,
+    // but browser dialog confirmation is still
+    // waiting user confirmation.
+    //
+    // As soon as the user accepts video recording,
+    // the stream is closed.
+    if (!video) {
+      stream.stop();
+      return;
+    }
 
-        if (!navigator.getUserMedia) {
-            console.warn('Sorry, your browser does not support the HTML5 Stream API');
-            return;
-        }
+    if (video.mozSrcObject !== undefined) {
+      video.mozSrcObject = stream;
+    } else {
+      video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+    }
 
-        var successCallback = _.bind(function(stream) {
-            var video = this.getVideo();
-            // Client has requested to stop the video,
-            // but browser dialog confirmation is still
-            // waiting user confirmation.
-            //
-            // As soon as the user accepts video recording,
-            // the stream is closed.
-            if (!video) {
-                stream.stop();
-                return;
-            }
+    video.play();
+    self.stream = stream;
 
-            if (video.mozSrcObject !== undefined) {
-                video.mozSrcObject = stream;
-            } else {
-                video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
-            }
+    $deferred.resolve();
+  }
 
-            video.play();
-            this.stream = stream;
+  function error(error) {
+    if (error.name === 'PermissionDeniedError') {
+      $deferred.reject({
+        message: 'Camera access has been denied :(',
+        originalError: error
+      });
+    } else {
+      $deferred.reject({
+        message: "Can't access the camera",
+        originalError: error
+      });
+    }
+  }
 
-            $deferred.resolve();
-        }, this);
+  navigator.getUserMedia({ video: true }, success, error);
 
-        var errorCallback = _.bind(function(error) {
-            if (error.name === 'PermissionDeniedError') {
-                $deferred.reject({
-                    message: 'Camera access has been denied :(',
-                    originalError: error
-                });
-            } else {
-                $deferred.reject({
-                    message: "Can't access the camera",
-                    originalError: error
-                });
-            }
-        }, this);
+  return $deferred;
+};
 
-        navigator.getUserMedia({ video: true }, successCallback, errorCallback);
+Camera.prototype.stopVideo = function() {
+  var video = this.getVideoEl();
 
-        return $deferred;
-    };
+  if (video === null) {
+    return;
+  }
 
-    Camera.prototype.stopVideo = function() {
-        var video = this.getVideo();
+  this.$video = null;
 
-        if (video === null) {
-            return;
-        }
+  video.pause();
+  video.src = '';
 
-        this.$video = null;
+  if (this.stream) {
+    this.stream.stop();
+    this.stream = null;
+  }
+};
 
-        video.pause();
-        video.src = '';
+/**
+ * Captures an snapshot from video stream.
+ *
+ * Returns a deferred object as data conversion
+ * is an asynchronous process.
+ *
+ * @param  {Object} options [description]
+ * @return {Deferred}         [description]
+ */
+Camera.prototype.capture = function(options) {
+  var $deferred = $.Deferred();
+  var $canvas = $("<canvas>").attr(options);
+  var canvas = $canvas.get(0);
+  var video = this.getVideoEl();
 
-        if (this.stream) {
-            this.stream.stop();
-            this.stream = null;
-        }
-    };
+  context = canvas.getContext("2d");
+  context.drawImage(video, 0, 0, options.width, options.height);
+  // Convert canvas to blob data
+  canvas.toBlob(function(blob) {
+    $deferred.resolve(blob);
+  }, options.type, options.quality);
 
-    /**
-     * Captures an snapshot from video stream.
-     *
-     * Returns a deferred object as data conversion
-     * is an asynchronous process.
-     *
-     * @param  {Object} options [description]
-     * @return {Deferred}         [description]
-     */
-    Camera.prototype.capture = function(options) {
-        var $deferred = $.Deferred(),
-            $canvas = $("<canvas>")
-                .attr(options),
-            canvas = $canvas.get(0),
-            video = this.$video.get(0);
+  return $deferred;
+};
 
-        context = $canvas.get(0).getContext("2d");
-        context.drawImage(video, 0, 0, options.width, options.height);
-        // Convert canvas to blob data
-        canvas.toBlob(function(blob) {
-            $deferred.resolve(blob);
-        }, options.type, options.quality);
-
-        return $deferred;
-    };
-})(window);
+module.exports = Camera;

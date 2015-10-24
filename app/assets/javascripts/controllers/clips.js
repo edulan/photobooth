@@ -1,49 +1,50 @@
-(function(root) {
-    var PhotoBooth = root.PhotoBooth;
+var Clip = require('models/clip');
+var Clips = require('collections/clips');
+var ClipList = require('views/clips/list');
+var ClipFullItem = require('views/clips/full-item');
+var ClipBooth = require('views/clips/booth');
 
-    PhotoBooth.Controllers = PhotoBooth.Controllers || {};
+var Controller = Marionette.Controller.extend({
+  initialize: function(options) {
+    this.collection = new Clips();
+  },
 
-    PhotoBooth.Controllers.Clips = Marionette.Controller.extend({
-        initialize: function(options) {
-            this.collection = new PhotoBooth.Collections.Clips();
-        },
-
-        index: function() {
-            var view = new PhotoBooth.Views.Clips({
-                collection: this.collection
-            });
-
-            this.collection.sort();
-            this.collection.fetch();
-
-            PhotoBooth.mainRegion.show(view);
-        },
-
-        create: function() {
-            var model = new PhotoBooth.Models.Clip();
-            var view = new PhotoBooth.Views.Booth({
-                model: model
-            });
-
-            PhotoBooth.mainRegion.show(view);
-        },
-
-        show: function(id) {
-            var model;
-
-            if (!(model = this.collection.get(id))) {
-                model = new PhotoBooth.Models.Clip({
-                    id: id,
-                    snapshots: []
-                });
-                model.fetch();
-            }
-
-            var view = new PhotoBooth.Views.ClipDetail({
-                model: model
-            });
-
-            PhotoBooth.mainRegion.show(view);
-        }
+  index: function() {
+    var view = new ClipList({
+      collection: this.collection
     });
-})(window);
+
+    this.collection.fetch();
+
+    PhotoBooth.mainRegion.show(view);
+  },
+
+  'new': function() {
+    var model = new Clip();
+    var view = new ClipBooth({
+      model: model
+    });
+
+    PhotoBooth.mainRegion.show(view);
+  },
+
+  show: function(id) {
+    var model;
+
+    if (!(model = this.collection.get(id))) {
+      model = new Clip({
+        id: id,
+        snapshots: []
+      });
+      model.fetch();
+    }
+
+    var view = new ClipFullItem({
+      model: model
+    });
+
+    PhotoBooth.mainRegion.show(view);
+  }
+});
+
+module.exports = Controller;

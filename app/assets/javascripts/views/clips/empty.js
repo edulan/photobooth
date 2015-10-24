@@ -1,11 +1,7 @@
-(function(root) {
-    var PhotoBooth = root.PhotoBooth;
+var ClipEmpty = Marionette.ItemView.extend({
+  tagName: "p",
+  className: "text-info text-center message-no-clips",
+  template: "clips/empty"
+});
 
-    PhotoBooth.Views = PhotoBooth.Views || {};
-
-    PhotoBooth.Views.Clips.Empty = Marionette.ItemView.extend({
-        tagName: "p",
-        className: "text-info text-center message-no-clips",
-        template: "clips/empty"
-    });
-})(window);
+module.exports = ClipEmpty;

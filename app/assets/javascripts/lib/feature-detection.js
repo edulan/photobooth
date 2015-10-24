@@ -1,16 +1,12 @@
-(function(root) {
-    var PhotoBooth = root.PhotoBooth;
+var FeatureDetection = {
+  isVideoSupported: function() {
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    window.URL = window.URL || window.webkitURL ||
+      window.mozURL || window.msURL;
 
-    PhotoBooth.Lib = PhotoBooth.Lib || {};
+    return !!navigator.getUserMedia;
+  }
+};
 
-    PhotoBooth.Lib.FeatureDetection = {
-        isVideoSupported: function() {
-            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-                navigator.mozGetUserMedia || navigator.msGetUserMedia;
-            window.URL = window.URL || window.webkitURL ||
-                window.mozURL || window.msURL;
-
-            return !!navigator.getUserMedia;
-        }
-    };
-})(window);
+module.exports = FeatureDetection;

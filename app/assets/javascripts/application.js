@@ -7,16 +7,11 @@
 //= require backbone.babysitter
 //= require backbone.wreqr
 //= require backbone.marionette
-//= require backbone-overrides
-
-//= require_tree ../templates
-//= require ./marionette-jst
-//= require ./photobooth
-//= require ./models
-//= require ./views
-//= require ./controllers
-//= require ./services
+//= require backbone-extensions
+//= require marionette-extensions
 
 $(function() {
-    PhotoBooth.start();
+  var PhotoBooth = require('photobooth');
+
+  PhotoBooth.start();
 });

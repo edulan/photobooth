@@ -1,18 +1,16 @@
-(function(root) {
-    var PhotoBooth = root.PhotoBooth;
+var Clip = require('models/clip');
 
-    PhotoBooth.Collections = PhotoBooth.Collections || {};
+var Clips = Backbone.Collection.extend({
+  url: "api/clips",
 
-    PhotoBooth.Collections.Clips = Backbone.Collection.extend({
-        url: "api/clips",
+  model: Clip,
 
-        model: PhotoBooth.Models.Clip,
+  comparator: function(model1, model2) {
+    var v1 = model1.get('votes');
+    var v2 = model2.get('votes');
 
-        comparator: function(model1, model2) {
-            var v1 = model1.get('votes'),
-                v2 = model2.get('votes');
+    return v1 < v2 ? 1 : v1 > v2 ? -1 : 0;
+  }
+});
 
-            return v1 < v2 ? 1 : v1 > v2 ? -1 : 0;
-        }
-    });
-})(window);
+module.exports = Clips;

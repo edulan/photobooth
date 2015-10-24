@@ -1,82 +1,79 @@
-(function(root) {
-    var PhotoBooth = root.PhotoBooth;
+var ClipFullItem = Marionette.ItemView.extend({
+  template: "clips/show",
 
-    PhotoBooth.Views = PhotoBooth.Views || {};
+  events: {
+    "click .btn-like": "onLike",
+    "click .btn-delete": "onDelete"
+  },
 
-    PhotoBooth.Views.Clips.FullItem = Marionette.ItemView.extend({
-        template: "clips/show",
+  initialize: function(options) {
+    this.listenTo(this.model, 'change', this.onChanged);
+    this.listenTo(this.model, 'destroy', this.onDestroyed);
+    this.listenTo(this.model, 'error', this.onError);
+  },
 
-        events: {
-            "click .btn-like": "onLike",
-            "click .btn-delete": "onDelete"
-        },
+  onShow: function() {
+    this.checkDelay = 0;
+    this.checkCount = 0;
+    this.checkProcessing(this.model);
+  },
 
-        initialize: function(options) {
-            this.listenTo(this.model, 'change', this.onChanged);
-            this.listenTo(this.model, 'destroy', this.onDestroyed);
-            this.listenTo(this.model, 'error', this.onError);
-        },
+  checkProcessing: function(model) {
+    if (!model.isProcessing()) {
+      return;
+    }
 
-        onShow: function() {
-            this.checkDelay = 0;
-            this.checkCount = 0;
-            this.checkProcessing(this.model);
-        },
+    if (this.checkCount > 4) {
+      this.checkDelay = 0;
+      this.checkCount = 0;
+      this.model.markAsMissing();
+      return;
+    }
 
-        checkProcessing: function(model) {
-            if (!model.isProcessing()) {
-                return;
-            }
+    this.checkDelay = 1000 * (Math.pow(2, this.checkCount) + Math.random());
+    this.checkCount += 1;
 
-            if (this.checkCount > 4) {
-                this.checkDelay = 0;
-                this.checkCount = 0;
-                this.model.markAsMissing();
-                return;
-            }
-
-            this.checkDelay = 1000 * (Math.pow(2, this.checkCount) + Math.random());
-            this.checkCount += 1;
-
-            model.fetch({
-                success: _.bind(function(model) {
-                    _.delay(
-                        _.bind(this.checkProcessing, this),
-                        this.checkDelay,
-                        model);
-                }, this)
-            });
-        },
-
-        onChanged: function(model) {
-            this.render();
-        },
-
-        onError: function(model) {
-            var $message = this.$(".row-info"),
-                $text = $("<p>")
-                .addClass("text-danger")
-                .html('Upss! Seems like this clip has been deleted');
-
-            $message.html($text);
-        },
-
-        onDestroyed: function(model) {
-            PhotoBooth.appRouter.navigate("clips", { trigger: true });
-        },
-
-        onLike: function(event) {
-            this.model.upvote();
-
-            event.preventDefault();
-        },
-
-        onDelete: function(event) {
-            if (confirm('Are you sure?')) {
-                this.model.destroy({ wait: true });
-            }
-
-            event.preventDefault();
-        }
+    model.fetch({
+      success: _.bind(function(model) {
+        _.delay(
+          _.bind(this.checkProcessing, this),
+          this.checkDelay,
+          model
+        );
+      }, this)
     });
-})(window);
+  },
+
+  onChanged: function(model) {
+    this.render();
+  },
+
+  onError: function(model) {
+    var $message = this.$(".row-info"),
+      $text = $("<p>")
+      .addClass("text-danger")
+      .html('Upss! Seems like this clip has been deleted');
+
+    $message.html($text);
+  },
+
+  onDestroyed: function(model) {
+    PhotoBooth.appRouter.navigate("clips", { trigger: true });
+  },
+
+  onLike: function(event) {
+    this.model.upvote();
+
+    event.preventDefault();
+  },
+
+  onDelete: function(event) {
+    if (confirm('Are you sure?')) {
+      this.model.destroy({ wait: true });
+    }
+
+    event.preventDefault();
+  }
+});
+
+module.exports = ClipFullItem;

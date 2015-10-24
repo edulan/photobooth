@@ -18,6 +18,7 @@ gem 'bootswatch-rails'
 gem 'autoprefixer-rails'
 gem 'font-awesome-rails'
 # Use Uglifier as compressor for JavaScript assets
+gem 'browserify-rails', '~> 1.1.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'ejs'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

@@ -22,3 +22,6 @@
 
 /*.sublime-project
 /*.sublime-workspace
+
+# Ignore node_modules
+/node_modules
