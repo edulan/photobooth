@@ -6,26 +6,26 @@ var ClipBooth = require('views/clips/booth');
 
 var Controller = Marionette.Controller.extend({
   initialize: function(options) {
-    this.collection = new Clips();
+    this.collection = PhotoBooth.Data.clips;
   },
 
   index: function() {
     var view = new ClipList({
       collection: this.collection
     });
+    // Force collection sorting to reflect like updates
+    this.collection.sort();
 
-    this.collection.fetch();
-
-    PhotoBooth.mainRegion.show(view);
+    PhotoBooth.root.content.show(view);
   },
 
   'new': function() {
     var model = new Clip();
     var view = new ClipBooth({
-      model: model
+      collection: this.collection
     });
 
-    PhotoBooth.mainRegion.show(view);
+    PhotoBooth.root.content.show(view);
   },
 
   show: function(id) {
@@ -43,7 +43,7 @@ var Controller = Marionette.Controller.extend({
       model: model
     });
 
-    PhotoBooth.mainRegion.show(view);
+    PhotoBooth.root.content.show(view);
   }
 });
 

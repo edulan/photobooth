@@ -1,19 +1,24 @@
+var Vars = require('config/vars');
+var Clips = require('collections/clips');
 var ClipsRouter = require('router');
 var ClipsController = require('controllers/clips');
-var Vars = require('config/vars');
+var Root = require('views/root');
 
 var PhotoBooth = new Marionette.Application();
 
 PhotoBooth.addInitializer(function() {
-  PhotoBooth.addRegions({
-    mainRegion: "section"
-  });
+  PhotoBooth.Vars = Vars;
+
+  PhotoBooth.Data = {};
+  PhotoBooth.Data.clips = new Clips();
+  PhotoBooth.Data.clips.fetch();
+
+  PhotoBooth.root = new Root();
+  PhotoBooth.root.render();
 
   PhotoBooth.appRouter = new ClipsRouter({
     controller: new ClipsController()
   });
-
-  PhotoBooth.Vars = Vars;
 
   Backbone.history.start();
 });

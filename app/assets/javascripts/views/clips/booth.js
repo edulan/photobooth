@@ -1,7 +1,8 @@
+var Clip = require('models/clip');
 var FeatureDetection = require('lib/feature-detection');
 var Camera = require('lib/camera');
 
-var ClipBooth = Marionette.CompositeView.extend({
+var ClipBooth = Marionette.ItemView.extend({
   template: "clips/new",
 
   events: {
@@ -18,6 +19,8 @@ var ClipBooth = Marionette.CompositeView.extend({
   },
 
   initialize: function(options) {
+    this.model = new Clip();
+
     this.listenTo(this.model, 'request', this.onRequest);
     this.listenTo(this.model, 'sync', this.onSynced);
     this.listenTo(this.model, 'error', this.onError);
@@ -74,7 +77,7 @@ var ClipBooth = Marionette.CompositeView.extend({
       snapshotsCount++;
 
       if (snapshotsCount > maxSnapshots) {
-        self.model.save(null, { multipart: true });
+        self.collection.create(self.model, { multipart: true });
         return;
       }
 
