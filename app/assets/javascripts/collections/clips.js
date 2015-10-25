@@ -1,7 +1,7 @@
 var Clip = require('models/clip');
 
 var Clips = Backbone.Collection.extend({
-  url: "api/clips",
+  url: "/api/clips",
 
   model: Clip,
 

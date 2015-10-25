@@ -1,0 +1,19 @@
+<%= form_for(@booth, html: { class: 'form-inline' }) do |f| %>
+  <% if @booth.errors.any? %>
+    <p class="bg-danger">
+      <ul>
+      <% @booth.errors.full_messages.each do |message| %>
+        <li>
+          <%= message %>
+        </li>
+      <% end %>
+      </ul>
+    </p>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.text_field :name, class: 'form-control', placeholder: 'Type a booth name' %>
+  </div>
+
+  <%= f.submit 'Start now', class: 'btn btn-default' %>
+<% end %>
