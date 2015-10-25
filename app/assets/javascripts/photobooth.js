@@ -1,5 +1,6 @@
 var ClipsRouter = require('router');
 var ClipsController = require('controllers/clips');
+var Vars = require('config/vars');
 
 var PhotoBooth = new Marionette.Application();
 
@@ -12,7 +13,7 @@ PhotoBooth.addInitializer(function() {
     controller: new ClipsController()
   });
 
-  PhotoBooth.Vars = {};
+  PhotoBooth.Vars = Vars;
 
   Backbone.history.start();
 });
