@@ -18,7 +18,10 @@
 # Ignore ENV variables
 /.env
 
-/public/system
+/public/uploads
 
 /*.sublime-project
 /*.sublime-workspace
+
+# Ignore node_modules
+/node_modules
