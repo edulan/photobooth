@@ -50,3 +50,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
 end
+
+group :development do
+  gem 'byebug'
+end
