@@ -6,7 +6,13 @@ var ClipList = Marionette.CompositeView.extend({
   className: "clips",
   childView: ClipItem,
   childViewContainer: ".row-clip",
-  emptyView: ClipEmpty
+  emptyView: ClipEmpty,
+
+  serializeModel: function(model) {
+    return  {
+      name: model.get('name'),
+    }
+  },
 });
 
 module.exports = ClipList;
