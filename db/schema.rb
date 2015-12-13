@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025142647) do
+ActiveRecord::Schema.define(version: 20151213105551) do
 
   create_table "booths", force: true do |t|
     t.string   "token"
@@ -44,6 +44,9 @@ ActiveRecord::Schema.define(version: 20151025142647) do
     t.boolean  "snapshot3_processing"
     t.boolean  "snapshot4_processing"
     t.integer  "votes",                  default: 0
+    t.integer  "booth_id"
   end
+
+  add_index "clips", ["booth_id"], name: "index_clips_on_booth_id"
 
 end
