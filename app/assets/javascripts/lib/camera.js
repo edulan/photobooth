@@ -1,7 +1,7 @@
-var Camera = function($el) {
+function Camera($el) {
   this.$video = $el;
   this.stream = null;
-};
+}
 
 Camera.prototype.getVideoEl = function() {
   if (!this.$video) {
@@ -49,17 +49,17 @@ Camera.prototype.startVideo = function() {
     if (error.name === 'PermissionDeniedError') {
       $deferred.reject({
         message: 'Camera access has been denied :(',
-        originalError: error
+        originalError: error,
       });
     } else {
       $deferred.reject({
-        message: "Can't access the camera",
-        originalError: error
+        message: 'Cannot access the camera',
+        originalError: error,
       });
     }
   }
 
-  navigator.getUserMedia({ video: true }, success, error);
+  navigator.getUserMedia({video: true}, success, error);
 
   return $deferred;
 };
@@ -93,11 +93,11 @@ Camera.prototype.stopVideo = function() {
  */
 Camera.prototype.capture = function(options) {
   var $deferred = $.Deferred();
-  var $canvas = $("<canvas>").attr(options);
+  var $canvas = $('<canvas>').attr(options);
   var canvas = $canvas.get(0);
   var video = this.getVideoEl();
 
-  context = canvas.getContext("2d");
+  var context = canvas.getContext('2d');
   context.drawImage(video, 0, 0, options.width, options.height);
   // Convert canvas to blob data
   canvas.toBlob(function(blob) {
