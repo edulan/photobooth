@@ -1,4 +1,4 @@
-//= require polyfills/canvas-to-blob
+//= require polyfills
 //= require jquery
 //= require bootstrap
 //= require bootstrap-sprockets

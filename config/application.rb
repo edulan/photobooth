@@ -21,5 +21,14 @@ module Photobooth
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    # Paths, that should be browserified. We browserify everything, that
+    # matches (===) one of the paths. So you will most likely put lambdas
+    # regexes in here.
+    #
+    # By default only files in /app and /node_modules are browserified,
+    # vendor stuff is normally not made for browserification and may stop
+    # working.
+    config.browserify_rails.paths << %r{vendor/assets/javascripts/polyfills\.js}
   end
 end

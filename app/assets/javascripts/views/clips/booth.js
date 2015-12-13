@@ -40,8 +40,8 @@ var ClipBooth = Marionette.ItemView.extend({
     this.ui.message.empty();
 
     this.camera = new Camera(this.ui.video);
-    this.camera.startVideo()
-      .done(function() {
+    this.camera.start()
+      .then(function() {
         var $text = $("<p>")
           .addClass("text-info")
           .text("Take your time to make a good impression. When you're ready click start button");
@@ -50,7 +50,7 @@ var ClipBooth = Marionette.ItemView.extend({
         self.ui.startButton.attr('disabled', false);
 
       })
-      .fail(function(error) {
+      .catch(function(error) {
         var $text = $("<p>")
           .addClass("text-warning")
           .text(error.message);
@@ -62,7 +62,7 @@ var ClipBooth = Marionette.ItemView.extend({
 
   onBeforeDestroy: function() {
     if (this.camera) {
-      this.camera.stopVideo();
+      this.camera.stop();
     }
   },
 
@@ -92,7 +92,7 @@ var ClipBooth = Marionette.ItemView.extend({
           // Reset countdown
           countdown = countdownSeconds;
           self.ui.flash.show().fadeOut("slow");
-          self.saveSnapshot('snapshot' + snapshotsCount).done(function() {
+          self.saveSnapshot('snapshot' + snapshotsCount).then(function() {
             takeNext();
           });
           return;
@@ -134,7 +134,7 @@ var ClipBooth = Marionette.ItemView.extend({
       .text("Clip created successfully!");
 
     this.ui.message.html($text);
-    this.camera.stopVideo();
+    this.camera.stop();
 
     _.delay(function() {
       PhotoBooth.appRouter.navigate("clips/" + model.id, { trigger: true });
@@ -147,7 +147,7 @@ var ClipBooth = Marionette.ItemView.extend({
       .html('There was an error creating your clip, would you like to <a href="#" class="btn-retry">retry?</a>');
 
     this.ui.message.html($text);
-    this.camera.stopVideo();
+    this.camera.stop();
   },
 
   saveSnapshot: function(name) {
@@ -156,15 +156,15 @@ var ClipBooth = Marionette.ItemView.extend({
     return this.camera.capture({
       width: 480,
       height: 320,
-      type: "image/jpeg",
-      quality: 0.8
-    }).done(function(blob) {
+      type: 'image/jpeg',
+      quality: 0.8,
+    }).then(function(blob) {
       var data = {};
 
       data[name] = blob;
       model.addFormData(data);
     });
-  }
+  },
 });
 
 module.exports = ClipBooth;
