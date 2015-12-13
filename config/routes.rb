@@ -8,9 +8,8 @@ Rails.application.routes.draw do
                      only: [:new, :show, :create]
 
   scope 'api' do
-    resources :clips, only: [:index, :show, :create, :destroy] do
-      put :upvote, on: :member
-    end
+    resources :clips, only: [:index, :show, :create, :destroy]
+    resources :upvotes, only: [:create]
   end
 
   root 'booths#new'

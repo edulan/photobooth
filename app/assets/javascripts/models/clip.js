@@ -1,19 +1,9 @@
 var Clip = Backbone.Model.extend({
-  urlRoot: "/api/clips",
+  urlRoot: '/api/clips',
 
   defaults: {
     votes: 0,
-    snapshots: []
-  },
-
-  upvote: function() {
-    var currentVotes = this.get('votes');
-
-    return this.save({ votes: currentVotes + 1 }, {
-      attrs: { id: this.id },
-      url: this.url() + '/upvote',
-      wait: true
-    });
+    snapshots: [],
   },
 
   isProcessing: function() {
@@ -58,7 +48,7 @@ var Clip = Backbone.Model.extend({
     }, this);
 
     return form;
-  }
+  },
 });
 
 module.exports = Clip;

@@ -1,12 +1,15 @@
+var Upvote = require('models/upvote');
+var UrlHelper = require('lib/url-helper');
+
 var ClipFullItem = Marionette.ItemView.extend({
-  template: "clips/show",
+  template: 'clips/show',
 
   events: {
-    "click .btn-like": "onLike",
-    "click .btn-delete": "onDelete"
+    'click .btn-like': 'onLike',
+    'click .btn-delete': 'onDelete',
   },
 
-  initialize: function(options) {
+  initialize: function() {
     this.listenTo(this.model, 'change', this.onChanged);
     this.listenTo(this.model, 'destroy', this.onDestroyed);
     this.listenTo(this.model, 'error', this.onError);
@@ -40,40 +43,47 @@ var ClipFullItem = Marionette.ItemView.extend({
           this.checkDelay,
           model
         );
-      }, this)
+      }, this),
     });
   },
 
-  onChanged: function(model) {
+  onChanged: function() {
     this.render();
   },
 
-  onError: function(model) {
-    var $message = this.$(".row-info"),
-      $text = $("<p>")
-      .addClass("text-danger")
+  onError: function() {
+    var $message = this.$('.row-info'),
+      $text = $('<p>')
+      .addClass('text-danger')
       .html('Upss! Seems like this clip has been deleted');
 
     $message.html($text);
   },
 
-  onDestroyed: function(model) {
-    PhotoBooth.appRouter.navigate("clips", { trigger: true });
+  onDestroyed: function() {
+    PhotoBooth.appRouter.navigate('clips', {trigger: true});
   },
 
   onLike: function(event) {
-    this.model.upvote();
+    var upvote = new Upvote();
+
+    upvote.save(null, {
+      url: UrlHelper.modelUrl(upvote, {clip_id: this.model.id}),
+      success: _.bind(function(model, response) {
+        this.model.set(response);
+      }, this),
+    });
 
     event.preventDefault();
   },
 
   onDelete: function(event) {
     if (confirm('Are you sure?')) {
-      this.model.destroy({ wait: true });
+      this.model.destroy({wait: true});
     }
 
     event.preventDefault();
-  }
+  },
 });
 
 module.exports = ClipFullItem;

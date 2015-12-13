@@ -1,6 +1,6 @@
 class ClipsController < ApplicationController
   before_action :set_booth, only: [:index, :create]
-  before_action :set_clip, only: [:show, :upvote, :destroy]
+  before_action :set_clip, only: [:show, :destroy]
 
   # GET /clips.json
   def index
@@ -29,17 +29,6 @@ class ClipsController < ApplicationController
     @clip.destroy
     respond_to do |format|
       format.json { head :no_content }
-    end
-  end
-
-  # POST /clips/1/upvote.json
-  def upvote
-    respond_to do |format|
-      if @clip.increment!(:votes)
-        format.json { head :no_content }
-      else
-        format.json { render json: @clip.errors, status: :unprocessable_entity }
-      end
     end
   end
 
