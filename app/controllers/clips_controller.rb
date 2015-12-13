@@ -1,11 +1,10 @@
 class ClipsController < ApplicationController
-  respond_to :json
-
-  before_action :set_clip, only: [:show, :upvote, :update, :destroy]
+  before_action :set_booth, only: [:index, :create]
+  before_action :set_clip, only: [:show, :upvote, :destroy]
 
   # GET /clips.json
   def index
-    @clips = Clip.all.order(votes: :desc)
+    @clips = @booth.clips.order(votes: :desc)
   end
 
   # GET /clips/1.json
@@ -14,7 +13,7 @@ class ClipsController < ApplicationController
 
   # POST /clips.json
   def create
-    @clip = Clip.new(clip_params)
+    @clip = @booth.clips.build(clip_params)
 
     respond_to do |format|
       if @clip.save
@@ -22,17 +21,6 @@ class ClipsController < ApplicationController
       else
         format.json { render json: @clip.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # PATCH/PUT /clips/1.json
-  def update
-    respond_to do |format|
-      # if @clip.update(clip_params)
-        format.json { head :no_content }
-      # else
-        # format.json { render json: @clip.errors, status: :unprocessable_entity }
-      # end
     end
   end
 
@@ -44,6 +32,7 @@ class ClipsController < ApplicationController
     end
   end
 
+  # POST /clips/1/upvote.json
   def upvote
     respond_to do |format|
       if @clip.increment!(:votes)
@@ -55,13 +44,16 @@ class ClipsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_clip
-      @clip = Clip.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def clip_params
-      params.require(:clip).permit(:snapshot1, :snapshot2, :snapshot3, :snapshot4)
-    end
+  def set_booth
+    @booth = Booth.find_by!(token: params[:booth_id])
+  end
+
+  def set_clip
+    @clip = Clip.find(params[:id])
+  end
+
+  def clip_params
+    params.require(:clip).permit(:snapshot1, :snapshot2, :snapshot3, :snapshot4)
+  end
 end

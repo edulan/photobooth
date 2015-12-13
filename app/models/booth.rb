@@ -1,6 +1,8 @@
 class Booth < ActiveRecord::Base
   before_create :generate_token
 
+  has_many :clips
+
   private
 
   def generate_token
