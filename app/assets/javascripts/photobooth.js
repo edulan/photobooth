@@ -17,15 +17,15 @@ PhotoBooth.addInitializer(function() {
   PhotoBooth.Data.clips = new Clips();
   PhotoBooth.Data.clips.fetch({
     data: {
-      booth_id: PhotoBooth.Data.booth.id
-    }
+      booth_id: PhotoBooth.Data.booth.id,
+    },
   });
 
   PhotoBooth.root = new Root();
   PhotoBooth.root.render();
 
   PhotoBooth.appRouter = new ClipsRouter({
-    controller: new ClipsController()
+    controller: new ClipsController(),
   });
 
   Backbone.history.start();
