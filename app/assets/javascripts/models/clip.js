@@ -1,5 +1,5 @@
 var Clip = Backbone.Model.extend({
-  urlRoot: "api/clips",
+  urlRoot: "/api/clips",
 
   defaults: {
     votes: 0,

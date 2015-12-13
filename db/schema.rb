@@ -11,10 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141217183828) do
+ActiveRecord::Schema.define(version: 20151213105551) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  create_table "booths", force: true do |t|
+    t.string   "token"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "clips", force: true do |t|
     t.datetime "created_at"
@@ -40,6 +44,9 @@ ActiveRecord::Schema.define(version: 20141217183828) do
     t.boolean  "snapshot3_processing"
     t.boolean  "snapshot4_processing"
     t.integer  "votes",                  default: 0
+    t.integer  "booth_id"
   end
+
+  add_index "clips", ["booth_id"], name: "index_clips_on_booth_id"
 
 end

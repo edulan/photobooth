@@ -36,6 +36,7 @@ gem "delayed_paperclip"
 gem 'posix-spawn' # see http://adamniedzielski.github.io/blog/2014/02/05/fighting-paperclip-errno-enomem-error/
 # Background processing
 gem 'sidekiq'
+gem 'sinatra', require: nil
 # JavaScript assets
 gem 'rails-assets-underscore', '1.6.0'
 gem 'rails-assets-backbone', '1.1.2'
@@ -49,4 +50,8 @@ group :test do
   gem 'poltergeist'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+end
+
+group :development do
+  gem 'byebug'
 end

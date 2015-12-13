@@ -16,7 +16,7 @@ if Rails.env.production?
 else
   options = {
     path: ':rails_root/public/uploads/:id_partition/:hash.:extension',
-    url: 'uploads/:id_partition/:hash.:extension',
+    url: '/uploads/:id_partition/:hash.:extension',
     use_timestamp: false
   }
 end

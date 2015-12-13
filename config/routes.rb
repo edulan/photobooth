@@ -1,9 +1,17 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
+
+  resources :booths, path: 'b',
+                     param: :token,
+                     only: [:new, :show, :create]
+
   scope 'api' do
-    resources :clips, only: [:index, :show, :create, :update, :destroy] do
+    resources :clips, only: [:index, :show, :create, :destroy] do
       put :upvote, on: :member
     end
   end
 
-  root 'home#index'
+  root 'booths#new'
 end

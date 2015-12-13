@@ -1,6 +1,7 @@
 var Clip = require('models/clip');
 var FeatureDetection = require('lib/feature-detection');
 var Camera = require('lib/camera');
+var UrlHelper = require('lib/url-helper');
 
 var ClipBooth = Marionette.ItemView.extend({
   template: "clips/new",
@@ -77,10 +78,12 @@ var ClipBooth = Marionette.ItemView.extend({
       snapshotsCount++;
 
       if (snapshotsCount > maxSnapshots) {
-        self.collection.create(self.model, { multipart: true });
+        self.collection.create(self.model, {
+          url: UrlHelper.modelUrl(self.model, {booth_id: PhotoBooth.Data.booth.id}),
+          multipart: true,
+        });
         return;
       }
-
 
       function updateCounter () {
         countdown--;

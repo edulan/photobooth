@@ -6,11 +6,13 @@ var ClipBooth = require('views/clips/booth');
 
 var Controller = Marionette.Controller.extend({
   initialize: function(options) {
+    this.model = PhotoBooth.Data.booth;
     this.collection = PhotoBooth.Data.clips;
   },
 
   index: function() {
     var view = new ClipList({
+      model: this.model,
       collection: this.collection
     });
     // Force collection sorting to reflect like updates
