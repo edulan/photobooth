@@ -58,6 +58,26 @@ var ClipBooth = Marionette.ItemView.extend({
         self.ui.message.html($text);
         self.ui.startButton.attr('disabled', true);
       });
+
+    // Face tracking code
+    var canvas = this.$("#snap-overlay").get(0);
+    var context = canvas.getContext('2d');
+
+    var tracker = new tracking.ObjectTracker('face');
+    tracker.setInitialScale(4);
+    tracker.setStepSize(2);
+    tracker.setEdgesDensity(0.1);
+
+    tracker.on('track', function (event) {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      event.data.forEach(function(rect) {
+        context.strokeStyle = '#a64ceb';
+        context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+      });
+    });
+
+    tracking.track('#snap-preview', tracker);
   },
 
   onBeforeDestroy: function() {
