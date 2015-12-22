@@ -20,23 +20,38 @@
 @import "bootswatch/darkly/bootswatch";
 @import "font-awesome";
 
-.jumbotron {
-    margin-bottom: 0;
+.btn-new-clip {
+  min-width: 120px;
 }
 
-.section-title {
-    display: inline;
+.alert-sm {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 0;
+}
+
+.jumbotron {
+  margin-bottom: 0;
+}
+
+.dashed {
+  border-style: dashed;
+}
+
+.navbar {
+  margin-bottom: 0;
 }
 
 .clip-group {
     float: left;
 
     .clip-wrapper {
-        margin: 10px;
         background: #fff;
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 0;
+        width: 282px;
+        height: 200px;
     }
 
     .clip-votes {
@@ -53,7 +68,7 @@
 }
 
 .clip-thumb {
-    width: 236px;
+    // width: 236px;
     padding: 5px;
 
     img, p {
@@ -80,7 +95,7 @@
 }
 
 .clip-medium {
-    width: 670px;
+    // width: 670px;
     padding: 10px;
 
     img, p {
@@ -129,6 +144,11 @@
     font-size: 2em;
 }
 
+.message-show-more {
+  margin: 10px;
+  cursor: pointer;
+}
+
 p.message-countdown {
     font-size: 6em;
     margin-top: 0;
@@ -140,7 +160,6 @@ p.message-countdown {
 }
 
 .row-clip {
-    margin-top: 15px;
     margin-left: -22.5px;
     margin-right: -22.5px;
 }

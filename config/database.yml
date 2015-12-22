@@ -1,19 +1,22 @@
 default: &default
-  adapter: sqlite3
-  pool: 5
-  timeout: 5000
+  adapter: postgresql
+  encoding: unicode
+  pool: 10
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: photobooth_development
+  username: <%= ENV["DB_USERNAME"] || 'photobooth' %>
+  password: <%= ENV["DB_PASSWORD"] || 'photobooth' %>
 
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: photobooth_test
+  username: <%= ENV["DB_USERNAME"] || 'photobooth' %>
+  password: <%= ENV["DB_PASSWORD"] || 'photobooth' %>
 
 production:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: photobooth
   pool: 20
   username: <%= ENV["DB_USERNAME"] %>

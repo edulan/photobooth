@@ -11,20 +11,18 @@ var ClipBooth = Marionette.ItemView.extend({
     'click .btn-retry': 'onRetry'
   },
 
+  modelEvents: {
+    request: 'onRequest',
+    sync: 'onSynced',
+    error: 'onError',
+  },
+
   ui: {
     message: '.row-info',
     startButton: '.btn-start',
     flash: '.cam-flash',
     counter: '.message-countdown',
     video: '#snap-preview'
-  },
-
-  initialize: function(options) {
-    this.model = new Clip();
-
-    this.listenTo(this.model, 'request', this.onRequest);
-    this.listenTo(this.model, 'sync', this.onSynced);
-    this.listenTo(this.model, 'error', this.onError);
   },
 
   onShow: function() {
@@ -60,7 +58,7 @@ var ClipBooth = Marionette.ItemView.extend({
       });
   },
 
-  onBeforeDestroy: function() {
+  onDestroy: function() {
     if (this.camera) {
       this.camera.stop();
     }

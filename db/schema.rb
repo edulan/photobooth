@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20151213105551) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "booths", force: true do |t|
     t.string   "token"
     t.string   "name"
@@ -47,6 +50,6 @@ ActiveRecord::Schema.define(version: 20151213105551) do
     t.integer  "booth_id"
   end
 
-  add_index "clips", ["booth_id"], name: "index_clips_on_booth_id"
+  add_index "clips", ["booth_id"], name: "index_clips_on_booth_id", using: :btree
 
 end
