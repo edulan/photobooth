@@ -2,7 +2,7 @@ var ClipItem = require('views/clips/item');
 var ClipEmpty = require('views/clips/empty');
 
 var ClipList = Marionette.CollectionView.extend({
-  className: 'clips',
+  className: 'clip-grid',
   childView: ClipItem,
   emptyView: ClipEmpty,
 

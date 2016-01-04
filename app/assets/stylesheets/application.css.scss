@@ -20,10 +20,6 @@
 @import "bootswatch/darkly/bootswatch";
 @import "font-awesome";
 
-.btn-new-clip {
-  min-width: 120px;
-}
-
 .alert-sm {
   padding-top: 5px;
   padding-bottom: 5px;
@@ -38,87 +34,114 @@
   border-style: dashed;
 }
 
-.navbar {
-  margin-bottom: 0;
+section {
+  margin-top: 60px;
+}
+
+.clip {
+  float: left;
+  background: #fff;
+}
+
+.clip-grid {
+  float: left;
+  margin-left: 5px;
+  margin-bottom: 15px;
+
+  .clip {
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+.clip-full {
+  width: 648px;
+  margin-top: 21px; // TODO: Extract me!
+  margin-left: auto;
+  margin-right: auto;
+
+  .clip {
+    margin: 0;
+  }
 }
 
 .clip-group {
+  float: left;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+}
+
+.clip-group-sm {
+  width: 282px;
+
+  img, p {
+    width: 129px;
+    height: 81.27px;
+  }
+
+  p {
+    border: 1px solid #605e5e;
+    border-radius: 4px;
+    float: left;
+    margin: 0;
+    text-align: center;
+  }
+
+  .clip-frame {
+    margin: 6px;
     float: left;
 
-    .clip-wrapper {
-        background: #fff;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 0;
-        width: 282px;
-        height: 200px;
+    .clip-processing {
+      line-height: 4em;
     }
-
-    .clip-votes {
-        background: white;
-        color: black;
-        padding-right: 7px;
-        padding-bottom: 7px;
-
-        span {
-            margin-right: 7px;
-            display: inline-block;
-        }
-    }
+  }
 }
 
-.clip-thumb {
-    // width: 236px;
-    padding: 5px;
+.clip-group-md {
+  width: 648px;
 
-    img, p {
-        width: 100px;
-        height: 63px;
+  img, p {
+    width: 300px;
+    height: 200px;
+  }
+
+  p {
+    border: 1px solid #605e5e;
+    border-radius: 4px;
+    float: left;
+    margin: 0;
+    text-align: center;
+  }
+
+  .clip-frame {
+    margin: 12px;
+    float: left;
+
+    .clip-processing {
+      line-height: 4em;
     }
-
-    p {
-        border: 1px solid #605e5e;
-        border-radius: 4px;
-        float: left;
-        margin: 0;
-        text-align: center;
-    }
-
-    .clip-content {
-        margin: 6px;
-        float: left;
-
-        .clip-processing {
-            line-height: 4em;
-        }
-    }
+  }
 }
 
-.clip-medium {
-    // width: 670px;
-    padding: 10px;
+.clip-group-wrapper {
+  display: inline-block;
+}
 
-    img, p {
-        width: 300px;
-        height: 200px;
-    }
+.clip-votes {
+  color: #000;
+  padding: 6px;
 
-    p {
-        border: 1px solid #605e5e;
-        border-radius: 4px;
-        float: left;
-        margin: 0;
-        text-align: center;
-    }
+  span {
+    margin-right: 7px;
+    display: inline-block;
+  }
+}
 
-    .clip-content {
-        margin: 12px;
-        float: left;
-
-        .clip-processing {
-            line-height: 4em;
-        }
-    }
+.clip-actions {
+  float: right;
+  display: inline-block;
+  margin-top: 10px;
 }
 
 .cam-flash {
@@ -156,23 +179,10 @@ p.message-countdown {
 }
 
 .row-info {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 .row-clip {
     margin-left: -22.5px;
     margin-right: -22.5px;
-}
-
-.btn-group-vertical.clip-actions {
-    margin-top: 10px;
-}
-
-.btn-group-vertical > .btn-like:first-child:not(:last-child) {
-    border-radius: 4px;
-}
-
-.btn-group-vertical > .btn.btn-delete {
-    margin-top: 10px;
-    text-align: right;
 }

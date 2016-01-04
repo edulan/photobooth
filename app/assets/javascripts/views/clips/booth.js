@@ -18,7 +18,7 @@ var ClipBooth = Marionette.ItemView.extend({
   },
 
   ui: {
-    message: '.row-info',
+    message: '.js-message',
     startButton: '.btn-start',
     flash: '.cam-flash',
     counter: '.message-countdown',

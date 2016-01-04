@@ -1,6 +1,6 @@
 var ClipItem = Marionette.ItemView.extend({
   template: 'clips/item',
-  className: 'clip-group clip-thumb',
+  className: 'clip',
 
   modelEvents: {
     change: 'render',

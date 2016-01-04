@@ -9,7 +9,7 @@ var Clip = Backbone.Model.extend({
   isProcessing: function() {
     var snapshots = this.get('snapshots');
 
-    return (snapshots.length !== 4) || snapshots.some(function(snapshot) {
+    return snapshots.some(function(snapshot) {
       return snapshot.is_processing;
     });
   },

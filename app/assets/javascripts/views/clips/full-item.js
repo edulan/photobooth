@@ -10,7 +10,7 @@ var ClipFullItem = Marionette.ItemView.extend({
   },
 
   initialize: function() {
-    this.listenTo(this.model, 'change', this.onChanged);
+    this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'destroy', this.onDestroyed);
     this.listenTo(this.model, 'error', this.onError);
   },
@@ -47,21 +47,14 @@ var ClipFullItem = Marionette.ItemView.extend({
     });
   },
 
-  onChanged: function() {
-    this.render();
+  onDestroyed: function() {
+    PhotoBooth.appRouter.navigate('clips', {trigger: true});
   },
 
   onError: function() {
-    var $message = this.$('.row-info'),
-      $text = $('<p>')
-      .addClass('text-danger')
-      .html('Upss! Seems like this clip has been deleted');
-
-    $message.html($text);
-  },
-
-  onDestroyed: function() {
-    PhotoBooth.appRouter.navigate('clips', {trigger: true});
+    this.model.set('errors', [
+      'Upss! Seems like this clip has been deleted',
+    ]);
   },
 
   onLike: function(event) {
@@ -83,6 +76,16 @@ var ClipFullItem = Marionette.ItemView.extend({
     }
 
     event.preventDefault();
+  },
+
+  serializeData: function () {
+    var model = this.model;
+
+    return _.extend({
+      hasErrors: function () {
+        return model.has('errors');
+      },
+    }, this.serializeModel(model));
   },
 });
 

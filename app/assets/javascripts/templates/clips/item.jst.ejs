@@ -1,7 +1,7 @@
-<a href="#clips/<%= id %>">
-  <div class="row clip-wrapper">
+<a class="clip-group-wrapper" href="#clips/<%= id %>">
+  <div class="clip-group clip-group-sm">
     <% _.each(snapshots, function(snapshot) { %>
-      <div class="clip-content">
+      <div class="clip-frame">
         <% if (snapshot.thumb_url.indexOf('processing') !== -1) { %>
             <p class="text-muted">
               <i class="fa fa-refresh fa-1x fa-spin clip-processing"></i>
