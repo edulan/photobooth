@@ -65,7 +65,7 @@ var ClipBooth = Marionette.ItemView.extend({
   },
 
   onStart: function(event) {
-    var countdownSeconds = PhotoBooth.Vars.countdownSeconds || 5,
+    var countdownSeconds = PhotoBooth.Vars.countdown_seconds,
       maxSnapshots = 4,
       snapshotsCount = 0,
       countdown = countdownSeconds;

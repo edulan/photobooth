@@ -2,14 +2,22 @@ var Clip = require('models/clip');
 var ClipTimeline = require('views/clips/timeline');
 var ClipFullItem = require('views/clips/full-item');
 var ClipBooth = require('views/clips/booth');
-var ModelStream = require('lib/model-stream');
 var UrlHelper = require('lib/url-helper');
 
 var Controller = Marionette.Controller.extend({
   initialize: function() {
+    var Stream;
+
     this.model = PhotoBooth.Data.booth;
     this.collection = PhotoBooth.Data.clips;
-    this.stream = new ModelStream({
+
+    if (PhotoBooth.Vars.features.live_streaming) {
+      Stream = require('lib/streams/model');
+    } else {
+      Stream = require('lib/streams/null');
+    }
+
+    this.stream = new Stream({
       url: UrlHelper.clipsStreamUrl(this.model),
       model: Clip,
     });

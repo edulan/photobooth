@@ -9,13 +9,13 @@ function ModelStream(options) {
   var source = this.source = new EventSource(url);
   var emitter = this;
 
-  source.addEventListener('open', function (event) {
+  source.addEventListener('open', function () {
     emitter.trigger('open');
   });
   source.addEventListener('error', function (event) {
     emitter.trigger('error', event);
   });
-  source.addEventListener('close', function (event) {
+  source.addEventListener('close', function () {
     emitter.trigger('close');
   });
 

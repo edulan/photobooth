@@ -1,4 +1,3 @@
-var Vars = require('config/vars');
 var Booth = require('models/booth');
 var Clips = require('collections/clips');
 var ClipsRouter = require('router');
@@ -7,8 +6,8 @@ var Root = require('views/root');
 
 var PhotoBooth = new Marionette.Application();
 
-PhotoBooth.addInitializer(function() {
-  PhotoBooth.Vars = Vars;
+PhotoBooth.addInitializer(function(options) {
+  PhotoBooth.Vars = options.vars || {};
 
   var booth_attributes = window.bootstrap.booth;
 
