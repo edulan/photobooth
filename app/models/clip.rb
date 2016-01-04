@@ -19,13 +19,6 @@ class Clip < ActiveRecord::Base
     validates_attachment_content_type snapshot_sym,
                                       content_type: %r{\Aimage\/.*\Z}
   end
-  # TODO: Extract attachments to its own model
-  (1..4).each do |i|
-    snapshot_sym = "snapshot#{i}".to_sym
-
-    process_in_background snapshot_sym,
-                          processing_image_url: 'assets/:style/processing.png'
-  end
 
   def snapshots
     (1..4).map { |i| send("snapshot#{i}".to_sym) }

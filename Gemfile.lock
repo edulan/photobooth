@@ -81,8 +81,6 @@ GEM
     conf_conf (1.0.2)
     connection_pool (2.2.0)
     database_cleaner (1.5.1)
-    delayed_paperclip (2.9.1)
-      paperclip (>= 3.3)
     diff-lcs (1.2.5)
     dotenv (1.0.2)
     dotenv-rails (1.0.2)
@@ -254,7 +252,6 @@ DEPENDENCIES
   capybara-screenshot!
   conf_conf!
   database_cleaner!
-  delayed_paperclip!
   dotenv-rails!
   ejs!
   factory_girl_rails!

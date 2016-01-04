@@ -8,7 +8,9 @@ class ClipsSubscriber
   def on_save
     @redis_notifier.subscribe do |data|
       clip_id = data
-      clip = Clip.find(data)
+      clip = Clip.find_by(id: clip_id)
+
+      next unless clip
 
       yield(data: serialize_clip(clip), event: serialize_event(clip))
     end
@@ -34,7 +36,7 @@ class ClipsSubscriber
         {
           thumb_url: snapshot.url(:thumb),
           medium_url: snapshot.url(:medium),
-          is_processing: snapshot.processing?
+          is_processing: false
         }
       end
     }

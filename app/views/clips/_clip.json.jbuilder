@@ -4,5 +4,5 @@ json.extract! clip,
 json.snapshots clip.snapshots do |snapshot|
   json.thumb_url snapshot.url(:thumb)
   json.medium_url snapshot.url(:medium)
-  json.is_processing snapshot.processing?
+  json.is_processing false
 end

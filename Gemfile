@@ -25,7 +25,6 @@ source 'https://rubygems.org' do
   # Uploads
   gem 'paperclip', '~> 4.2'
   gem 'aws-sdk'
-  gem 'delayed_paperclip'
   gem 'posix-spawn' # see http://adamniedzielski.github.io/blog/2014/02/05/fighting-paperclip-errno-enomem-error/
   # Background processing
   gem 'sidekiq'
