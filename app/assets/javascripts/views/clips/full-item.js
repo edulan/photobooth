@@ -9,10 +9,10 @@ var ClipFullItem = Marionette.ItemView.extend({
     'click .btn-delete': 'onDelete',
   },
 
-  initialize: function() {
-    this.listenTo(this.model, 'change', this.render);
-    this.listenTo(this.model, 'destroy', this.onDestroyed);
-    this.listenTo(this.model, 'error', this.onError);
+  modelEvents: {
+    change: 'render',
+    destroy: 'onDestroy',
+    error: 'onError',
   },
 
   onShow: function() {
@@ -47,7 +47,7 @@ var ClipFullItem = Marionette.ItemView.extend({
     });
   },
 
-  onDestroyed: function() {
+  onDestroy: function() {
     PhotoBooth.appRouter.navigate('clips', {trigger: true});
   },
 
