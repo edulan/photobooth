@@ -1,6 +1,8 @@
 class Clip < ActiveRecord::Base
   belongs_to :booth
 
+  after_commit :notify_save
+
   (1..4).each do |i|
     snapshot_sym = "snapshot#{i}".to_sym
 
@@ -18,14 +20,13 @@ class Clip < ActiveRecord::Base
                                       content_type: %r{\Aimage\/.*\Z}
   end
 
-  (1..4).each do |i|
-    snapshot_sym = "snapshot#{i}".to_sym
-
-    process_in_background snapshot_sym,
-                          processing_image_url: 'assets/:style/processing.png'
-  end
-
   def snapshots
     (1..4).map { |i| send("snapshot#{i}".to_sym) }
+  end
+
+  private
+
+  def notify_save
+    Redis.current.publish("clips_#{booth_id}", id.to_s)
   end
 end

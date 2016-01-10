@@ -20,104 +20,157 @@
 @import "bootswatch/darkly/bootswatch";
 @import "font-awesome";
 
-.jumbotron {
-    margin-bottom: 0;
+.alert-sm {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 0;
 }
 
-.section-title {
-    display: inline;
+.jumbotron {
+  margin-bottom: 0;
+}
+
+.dashed {
+  border-style: dashed;
+}
+
+section {
+  margin-top: 60px;
+}
+
+.clip {
+  float: left;
+  background: #fff;
+}
+
+.clip-grid {
+  float: left;
+  margin-left: 5px;
+  margin-bottom: 15px;
+
+  .clip {
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+.clip-full {
+  width: 648px;
+  margin-top: 21px; // TODO: Extract me!
+  margin-left: auto;
+  margin-right: auto;
+
+  .clip {
+    margin: 0;
+  }
 }
 
 .clip-group {
+  float: left;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+}
+
+.clip-group-sm {
+  width: 282px;
+
+  img, p {
+    width: 129px;
+    height: 81.27px;
+  }
+
+  p {
+    border: 1px solid #605e5e;
+    border-radius: 4px;
+    float: left;
+    margin: 0;
+    text-align: center;
+  }
+
+  .clip-frame {
+    margin: 6px;
     float: left;
 
-    .clip-wrapper {
-        margin: 10px;
-        background: #fff;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 0;
+    .clip-processing {
+      line-height: 4em;
     }
-
-    .clip-votes {
-        background: white;
-        color: black;
-        padding-right: 7px;
-        padding-bottom: 7px;
-
-        span {
-            margin-right: 7px;
-            display: inline-block;
-        }
-    }
+  }
 }
 
-.clip-thumb {
-    width: 236px;
-    padding: 5px;
+.clip-group-md {
+  width: 648px;
 
-    img, p {
-        width: 100px;
-        height: 63px;
+  img, p {
+    width: 300px;
+    height: 200px;
+  }
+
+  p {
+    border: 1px solid #605e5e;
+    border-radius: 4px;
+    float: left;
+    margin: 0;
+    text-align: center;
+  }
+
+  .clip-frame {
+    margin: 12px;
+    float: left;
+
+    .clip-processing {
+      line-height: 4em;
     }
-
-    p {
-        border: 1px solid #605e5e;
-        border-radius: 4px;
-        float: left;
-        margin: 0;
-        text-align: center;
-    }
-
-    .clip-content {
-        margin: 6px;
-        float: left;
-
-        .clip-processing {
-            line-height: 4em;
-        }
-    }
+  }
 }
 
-.clip-medium {
-    width: 670px;
-    padding: 10px;
-
-    img, p {
-        width: 300px;
-        height: 200px;
-    }
-
-    p {
-        border: 1px solid #605e5e;
-        border-radius: 4px;
-        float: left;
-        margin: 0;
-        text-align: center;
-    }
-
-    .clip-content {
-        margin: 12px;
-        float: left;
-
-        .clip-processing {
-            line-height: 4em;
-        }
-    }
+.clip-group-wrapper {
+  display: inline-block;
 }
 
-.cam-flash {
-    background-color: white;
-    display: none;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.92;
-    z-index: 999;
+.clip-votes {
+  color: #000;
+  padding: 6px;
+
+  span {
+    margin-right: 7px;
+    display: inline-block;
+  }
+}
+
+.clip-actions {
+  float: right;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.flash {
+  display: none;
+  background-color: white;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+.flashin {
+  display: block;
+  animation: flashin 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes flashin {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 .message-fail {
@@ -129,6 +182,11 @@
     font-size: 2em;
 }
 
+.message-show-more {
+  margin: 10px;
+  cursor: pointer;
+}
+
 p.message-countdown {
     font-size: 6em;
     margin-top: 0;
@@ -136,24 +194,10 @@ p.message-countdown {
 }
 
 .row-info {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 .row-clip {
-    margin-top: 15px;
     margin-left: -22.5px;
     margin-right: -22.5px;
-}
-
-.btn-group-vertical.clip-actions {
-    margin-top: 10px;
-}
-
-.btn-group-vertical > .btn-like:first-child:not(:last-child) {
-    border-radius: 4px;
-}
-
-.btn-group-vertical > .btn.btn-delete {
-    margin-top: 10px;
-    text-align: right;
 }

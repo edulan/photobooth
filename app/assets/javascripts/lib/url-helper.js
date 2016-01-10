@@ -8,6 +8,10 @@ var UrlHelper = {
 
     return baseUrl + '?' + $.param(params);
   },
+
+  clipsStreamUrl: function (model) {
+    return '/clips/stream?booth_id=' + model.id;
+  },
 };
 
 module.exports = UrlHelper;

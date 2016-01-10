@@ -4,8 +4,8 @@ var Root = Marionette.LayoutView.extend({
   el: 'body',
 
   regions: {
-    content: '.js-content'
-  }
+    content: '.js-content',
+  },
 });
 
 module.exports = Root;

@@ -1,52 +1,65 @@
 var Clip = require('models/clip');
-var Clips = require('collections/clips');
-var ClipList = require('views/clips/list');
+var ClipTimeline = require('views/clips/timeline');
 var ClipFullItem = require('views/clips/full-item');
 var ClipBooth = require('views/clips/booth');
+var UrlHelper = require('lib/url-helper');
 
 var Controller = Marionette.Controller.extend({
-  initialize: function(options) {
+  initialize: function() {
+    var Stream;
+
     this.model = PhotoBooth.Data.booth;
     this.collection = PhotoBooth.Data.clips;
+
+    if (PhotoBooth.Vars.features.live_streaming) {
+      Stream = require('lib/streams/model');
+    } else {
+      Stream = require('lib/streams/null');
+    }
+
+    this.stream = new Stream({
+      url: UrlHelper.clipsStreamUrl(this.model),
+      model: Clip,
+    });
   },
 
   index: function() {
-    var view = new ClipList({
+    var view = new ClipTimeline({
+      stream: this.stream,
       model: this.model,
-      collection: this.collection
+      collection: this.collection,
     });
-    // Force collection sorting to reflect like updates
-    this.collection.sort();
 
     PhotoBooth.root.content.show(view);
   },
 
-  'new': function() {
+  new: function() {
     var model = new Clip();
     var view = new ClipBooth({
-      collection: this.collection
+      model: model,
+      collection: this.collection,
     });
 
     PhotoBooth.root.content.show(view);
   },
 
   show: function(id) {
-    var model;
+    var model = this.collection.get(id);
 
-    if (!(model = this.collection.get(id))) {
+    if (!model) {
       model = new Clip({
         id: id,
-        snapshots: []
+        snapshots: [],
       });
       model.fetch();
     }
 
     var view = new ClipFullItem({
-      model: model
+      model: model,
     });
 
     PhotoBooth.root.content.show(view);
-  }
+  },
 });
 
 module.exports = Controller;

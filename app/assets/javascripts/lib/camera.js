@@ -100,7 +100,7 @@ Camera.prototype.stopStream = function() {
 Camera.prototype.capture = function(options) {
   var self = this;
 
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     var $canvas = $('<canvas>').attr(options);
     var canvas = $canvas.get(0);
     var context = canvas.getContext('2d');

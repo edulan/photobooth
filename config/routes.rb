@@ -12,5 +12,7 @@ Rails.application.routes.draw do
     resources :upvotes, only: [:create]
   end
 
+  get 'clips/stream', to: 'clips_stream#index'
+
   root 'booths#new'
 end

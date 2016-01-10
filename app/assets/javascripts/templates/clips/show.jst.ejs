@@ -1,33 +1,35 @@
-<div class="row row-info text-center">
-</div>
 <div class="row">
-  <div class="col-md-8">
-    <div class="clip-group clip-medium">
-      <div class="row clip-wrapper">
-        <% _.each(snapshots, function(snapshot) { %>
-        <div class="clip-content">
-          <% if (snapshot.is_missing) { %>
-              <img src="assets/medium/missing.png" alt="missing">
-          <% } else if (snapshot.is_processing) { %>
-              <p class="text-muted">
-                <i class="fa fa-refresh fa-3x fa-spin clip-processing"></i>
-              </p>
-          <% } else { %>
-              <img src="<%= snapshot.medium_url %>" alt="">
-          <% } %>
+  <div class="clip-full">
+    <% if (hasErrors()) { %>
+      <div class="js-message alert alert-danger text-center">
+        <%= _.first(errors) %>
+      </div>
+    <% } else { %>
+      <div class="clip">
+        <div class="clip-group clip-group-md">
+          <% _.each(snapshots, function(snapshot) { %>
+            <div class="clip-frame">
+              <% if (snapshot.is_missing) { %>
+                  <img src="assets/medium/missing.png" alt="missing">
+              <% } else if (snapshot.is_processing) { %>
+                  <p class="text-muted">
+                    <i class="fa fa-refresh fa-3x fa-spin clip-processing"></i>
+                  </p>
+              <% } else { %>
+                  <img src="<%= snapshot.medium_url %>" alt="">
+              <% } %>
+            </div>
+          <% }) %>
         </div>
-        <% }) %>
+      </div>
+      <div class="clip-actions">
+        <a href="#" class="btn btn-default btn-like">
+          <i class="fa fa-thumbs-o-up fa-1x"></i> Like (<%= votes %>)
+        </a>
+        <a class="btn btn-xs btn-link btn-delete" href="#">
+          delete
+        </a>
       </div>
     </div>
-  </div>
-  <div class="col-md-4">
-    <div class="btn-group-vertical clip-actions">
-      <a href="#" class="btn btn-default btn-like">
-        <i class="fa fa-thumbs-o-up fa-1x"></i> Like (<%= votes %>)
-      </a>
-      <a class="btn btn-xs btn-link btn-delete" href="#">
-        delete
-      </a>
-    </div>
-  </div>
+  <% } %>
 </div>
