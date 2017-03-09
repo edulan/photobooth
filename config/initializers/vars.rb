@@ -1,6 +1,6 @@
 PHOTOBOOTH_VARS = {
-  countdown_seconds: 3,
+  countdown_seconds: ENV['PHOTOBOOTH_COUNTDOWN_SECONDS'].to_i,
   features: {
-    live_streaming: true
+    live_streaming: ENV['PHOTOBOOTH_LIVE_STREAMING'] === 'true'
   }
 }
