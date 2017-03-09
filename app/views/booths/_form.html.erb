@@ -1,14 +1,14 @@
 <%= form_for(@booth, html: { class: 'form-inline' }) do |f| %>
   <% if @booth.errors.any? %>
-    <p class="bg-danger">
-      <ul>
+    <div class="alert alert-danger">
+      <ul class="form-errors">
       <% @booth.errors.full_messages.each do |message| %>
         <li>
           <%= message %>
         </li>
       <% end %>
       </ul>
-    </p>
+    </div>
   <% end %>
 
   <div class="form-group">

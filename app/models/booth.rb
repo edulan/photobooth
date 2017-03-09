@@ -3,6 +3,8 @@ class Booth < ActiveRecord::Base
 
   has_many :clips
 
+  validates :name, presence: true
+
   private
 
   def generate_token
