@@ -24,7 +24,7 @@ source 'https://rubygems.org' do
   gem 'puma'
   # Uploads
   gem 'paperclip', '~> 4.2'
-  gem 'aws-sdk'
+  gem 'aws-sdk', '< 2.0'
   gem 'posix-spawn' # see http://adamniedzielski.github.io/blog/2014/02/05/fighting-paperclip-errno-enomem-error/
   # Background processing
   gem 'sidekiq'
@@ -44,6 +44,7 @@ source 'https://rubygems.org' do
     gem 'byebug'
     gem 'spring'
     gem 'foreman'
+    gem 'sqlite3'
   end
 end
 

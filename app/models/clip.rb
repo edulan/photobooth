@@ -27,6 +27,6 @@ class Clip < ActiveRecord::Base
   private
 
   def notify_save
-    Redis.current.publish("clips_#{booth_id}", id.to_s)
+    REDIS.publish("clips_#{booth_id}", id.to_s)
   end
 end

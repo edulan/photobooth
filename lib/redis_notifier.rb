@@ -30,6 +30,6 @@ class RedisNotifier
   end
 
   def redis
-    @redis ||= Redis.new
+    @redis ||= REDIS
   end
 end
