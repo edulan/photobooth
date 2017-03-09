@@ -1,6 +1,6 @@
 class ClipsController < ApplicationController
   before_action :set_booth, only: [:index, :create]
-  before_action :set_clip, only: [:show, :destroy]
+  before_action :set_clip, only: [:show]
 
   # GET /clips.json
   def index
@@ -26,9 +26,8 @@ class ClipsController < ApplicationController
 
   # DELETE /clips/1.json
   def destroy
-    @clip.destroy
     respond_to do |format|
-      format.json { head :no_content }
+      format.json { head :not_implemented }
     end
   end
 

@@ -6,7 +6,6 @@ var ClipFullItem = Marionette.ItemView.extend({
 
   events: {
     'click .btn-like': 'onLike',
-    'click .btn-delete': 'onDelete',
   },
 
   modelEvents: {
@@ -66,14 +65,6 @@ var ClipFullItem = Marionette.ItemView.extend({
         this.model.set(response);
       }, this),
     });
-
-    event.preventDefault();
-  },
-
-  onDelete: function(event) {
-    if (confirm('Are you sure?')) {
-      this.model.destroy({wait: true});
-    }
 
     event.preventDefault();
   },
